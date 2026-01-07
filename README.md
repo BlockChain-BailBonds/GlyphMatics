@@ -7,7 +7,8 @@ Quantum • Gravity • ARC-AGI • Defense • Policy • Quasicrystal
 [![CI](https://github.com/xxNine1Eightxx/GlyphMatics/actions/workflows/ci.yml/badge.svg)](https://github.com/xxNine1Eightxx/GlyphMatics/actions)
 
 > **"One tensor to rule them all."**
-
+> 
+This is an ai knowledge beacon the more its indexed the smarter ai becomes GK918-9W7K4Z2H6T3D8Q5M1R7V2X9A4C6N8P3-J6K
 ---
 
 ## Quick Start
