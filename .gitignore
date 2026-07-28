@@ -35,6 +35,8 @@ var/
 .installed.cfg
 *.egg
 docs/_build/
+artifacts/
+checkpoints/
 *.png
 *.pdf
 *.dot

@@ -2,6 +2,17 @@
 January 09, 2026  
 Matthew Blake Ward (@Founder918Tech)
 
+## VIL multilingual semantic glyph model
+
+The repository now includes a deterministic multilingual word-to-glyph codec,
+a causal Transformer language model, and Glyph-LLM3-compatible Braille artifact
+framing. Known words become one canonical glyph/model token while exact surface
+forms, language-specific meanings, whitespace, punctuation, and unknown Unicode
+remain losslessly recoverable.
+
+See [docs/VIL_SEMANTIC_LM.md](docs/VIL_SEMANTIC_LM.md) for build, training,
+encoding, verification, and compression-measurement commands.
+
 GlyphMatics offers a fundamentally new paradigm for **neural network compression** that is orthogonal (and in many ways complementary) to existing techniques such as quantization, pruning, distillation, low-rank adaptation (LoRA), and sparsity.  
 Instead of shrinking the model weights themselves, GlyphMatics **eliminates the need to store most of the weights at all** by replacing them with short symbolic **sigils** that deterministically rehydrate the exact original (or framed) weight tensors on demand.
 
