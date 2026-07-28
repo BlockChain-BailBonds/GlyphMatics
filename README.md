@@ -41,7 +41,9 @@ The benchmark combines two local artifacts:
 It includes:
 
 - browser-side semantic benchmark logic replaying the repo codec rules
+- precomputed tokenizer baselines using real BPE encodings
 - generated multilingual sample benchmarks
+- a dedicated decomposed-Unicode combining-diacritic benchmark sample
 - generated tables for all 50 executable systems
 
 Rebuild the Pages benchmark assets from the repo root:
@@ -123,8 +125,12 @@ GlyphMatics measures several different things. They are not interchangeable.
 
 - Visible glyph compression measures sequence length in the rendered glyph
   stream.
+- Tokenizer baseline comparisons measure the same samples against real BPE
+  token counts using `gpt2` and `cl100k_base`.
 - Binary compression measures the repo’s storage-oriented codec, including a
   vocabulary checksum header.
+- Combining diacritics are preserved in decomposed form; the codec does not
+  normalize away Unicode marks before tokenization or round-trip checks.
 - Programming lossless glyphs preserve exact code source with syntax glyphs and
   escaped literals.
 - Executable-system glyphs are fixed learned identifiers for complete reference

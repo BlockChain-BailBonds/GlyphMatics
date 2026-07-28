@@ -139,19 +139,29 @@ def save_checkpoint(
     *,
     vocabulary_sha256: str,
     training: dict[str, Any],
+    optimizer_state_dict: dict[str, Any] | None = None,
+    scheduler_state_dict: dict[str, Any] | None = None,
+    scaler_state_dict: dict[str, Any] | None = None,
+    training_state: dict[str, Any] | None = None,
 ) -> None:
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
-    torch.save(
-        {
-            "format": "glyphmatics-semantic-lm-v1",
-            "config": asdict(model.config),
-            "vocabulary_sha256": vocabulary_sha256,
-            "training": training,
-            "state_dict": model.state_dict(),
-        },
-        target,
-    )
+    payload = {
+        "format": "glyphmatics-semantic-lm-v2",
+        "config": asdict(model.config),
+        "vocabulary_sha256": vocabulary_sha256,
+        "training": training,
+        "state_dict": model.state_dict(),
+    }
+    if optimizer_state_dict is not None:
+        payload["optimizer_state_dict"] = optimizer_state_dict
+    if scheduler_state_dict is not None:
+        payload["scheduler_state_dict"] = scheduler_state_dict
+    if scaler_state_dict is not None:
+        payload["scaler_state_dict"] = scaler_state_dict
+    if training_state is not None:
+        payload["training_state"] = training_state
+    torch.save(payload, target)
 
 
 def load_checkpoint(
@@ -161,7 +171,7 @@ def load_checkpoint(
     expected_vocabulary_sha256: str | None = None,
 ) -> tuple[SemanticGlyphLM, dict[str, Any]]:
     payload = torch.load(Path(path), map_location=device, weights_only=False)
-    if payload.get("format") != "glyphmatics-semantic-lm-v1":
+    if payload.get("format") not in {"glyphmatics-semantic-lm-v1", "glyphmatics-semantic-lm-v2"}:
         raise ValueError("unsupported semantic model checkpoint")
     digest = payload.get("vocabulary_sha256")
     if expected_vocabulary_sha256 and digest != expected_vocabulary_sha256:

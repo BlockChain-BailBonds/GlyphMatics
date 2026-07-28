@@ -7,6 +7,11 @@ import json
 from pathlib import Path
 from statistics import mean
 
+try:
+    import tiktoken
+except ImportError:  # pragma: no cover - optional benchmark dependency
+    tiktoken = None
+
 from glyphmatics.programming_syntax import (
     EXECUTABLE_SYSTEMS,
     canonicalize_program,
@@ -40,9 +45,84 @@ TARGET_SAMPLE_LANGUAGES = (
     ("code:javascript", "JavaScript"),
 )
 
+COMBINING_DIACRITIC_SAMPLE = {
+    "id": "combining-diacritics",
+    "label": "Combining Diacritics",
+    "language": "und",
+    "text": "Cafe\u0301 nai\u0308ve coo\u0308perate A\u0301",
+    "source": "glyphmatics/combining-diacritic-sample",
+}
+
+TOKENIZER_BASELINES = (
+    ("gpt2", "GPT-2 BPE"),
+    ("cl100k_base", "cl100k BPE"),
+)
+
 
 def _load_json(path: Path) -> dict[str, object]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _load_tokenizer_baselines() -> tuple[dict[str, object], list[dict[str, str]]]:
+    if tiktoken is None:
+        return {}, [
+            {
+                "id": tokenizer_id,
+                "label": label,
+                "available": False,
+                "reason": "tiktoken is not installed",
+            }
+            for tokenizer_id, label in TOKENIZER_BASELINES
+        ]
+    encoders: dict[str, object] = {}
+    metadata: list[dict[str, str]] = []
+    for tokenizer_id, label in TOKENIZER_BASELINES:
+        try:
+            encoder = tiktoken.get_encoding(tokenizer_id)
+        except Exception as exc:  # pragma: no cover - depends on local tokenizer tables
+            metadata.append(
+                {
+                    "id": tokenizer_id,
+                    "label": label,
+                    "available": False,
+                    "reason": f"{type(exc).__name__}: {exc}",
+                }
+            )
+            continue
+        encoders[tokenizer_id] = encoder
+        metadata.append(
+            {
+                "id": tokenizer_id,
+                "label": label,
+                "available": True,
+            }
+        )
+    return encoders, metadata
+
+
+def _baseline_counts(text: str, encoders: dict[str, object]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for tokenizer_id, label in TOKENIZER_BASELINES:
+        encoder = encoders.get(tokenizer_id)
+        if encoder is None:
+            rows.append(
+                {
+                    "id": tokenizer_id,
+                    "label": label,
+                    "available": False,
+                }
+            )
+            continue
+        token_count = len(encoder.encode(text, disallowed_special=()))
+        rows.append(
+            {
+                "id": tokenizer_id,
+                "label": label,
+                "available": True,
+                "token_count": token_count,
+            }
+        )
+    return rows
 
 
 def _copy_minified_json(source: Path, destination: Path) -> None:
@@ -113,19 +193,24 @@ def _preview(text: str, *, limit: int = 120) -> dict[str, object]:
     }
 
 
-def _build_semantic_sample_rows(vocabulary: SemanticVocabulary) -> list[dict[str, object]]:
+def _build_semantic_sample_rows(
+    vocabulary: SemanticVocabulary,
+    baseline_encoders: dict[str, object],
+) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
-    for sample in _pick_semantic_samples():
+    for sample in [*_pick_semantic_samples(), COMBINING_DIACRITIC_SAMPLE]:
         text = sample["text"]
         glyphs = vocabulary.encode_glyphs(text)
         binary = vocabulary.encode_binary(text)
         decoded = vocabulary.decode_glyphs(glyphs)
+        baselines = _baseline_counts(text, baseline_encoders)
         if decoded != text:
             raise RuntimeError(f"semantic glyph round-trip failed for {sample['language']}")
         rows.append(
             {
                 **sample,
                 "stats": vocabulary.compression_stats(text).as_dict(),
+                "tokenizer_baselines": baselines,
                 "glyph_preview": _preview(glyphs),
                 "binary_preview_hex": binary[:32].hex(),
                 "lossless_roundtrip": True,
@@ -134,12 +219,16 @@ def _build_semantic_sample_rows(vocabulary: SemanticVocabulary) -> list[dict[str
     return rows
 
 
-def _build_system_rows(vocabulary: SemanticVocabulary) -> list[dict[str, object]]:
+def _build_system_rows(
+    vocabulary: SemanticVocabulary,
+    baseline_encoders: dict[str, object],
+) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     for system in EXECUTABLE_SYSTEMS:
         lossless_glyphs = encode_program_lossless(system.source, "python")
         canonical_glyphs = canonicalize_program(system.source, "python")
         semantic_stats = vocabulary.compression_stats(system.source).as_dict()
+        baselines = _baseline_counts(system.source, baseline_encoders)
         rows.append(
             {
                 "system_id": system.system_id,
@@ -162,6 +251,7 @@ def _build_system_rows(vocabulary: SemanticVocabulary) -> list[dict[str, object]
                     len(system.source) / max(1, len(lossless_glyphs)),
                     6,
                 ),
+                "tokenizer_baselines": baselines,
                 "semantic_stats_v3": semantic_stats,
             }
         )
@@ -177,9 +267,28 @@ def build() -> Path:
 
     semantic_v2_vocab = SemanticVocabulary.load(SEMANTIC_V2_VOCAB)
     systems_v3_vocab = SemanticVocabulary.load(SYSTEMS_V3_VOCAB)
+    baseline_encoders, baseline_metadata = _load_tokenizer_baselines()
 
-    semantic_samples = _build_semantic_sample_rows(semantic_v2_vocab)
-    system_rows = _build_system_rows(systems_v3_vocab)
+    semantic_samples = _build_semantic_sample_rows(semantic_v2_vocab, baseline_encoders)
+    system_rows = _build_system_rows(systems_v3_vocab, baseline_encoders)
+
+    def _mean_semantic_baseline_ratio(tokenizer_id: str) -> float | None:
+        values = [
+            baseline["token_count"] / max(1, row["stats"]["glyph_characters"])
+            for row in semantic_samples
+            for baseline in row["tokenizer_baselines"]
+            if baseline["id"] == tokenizer_id and baseline.get("available")
+        ]
+        return round(mean(values), 6) if values else None
+
+    def _mean_system_baseline_ratio(tokenizer_id: str) -> float | None:
+        values = [
+            baseline["token_count"] / max(1, row["lossless_program_glyph_characters"])
+            for row in system_rows
+            for baseline in row["tokenizer_baselines"]
+            if baseline["id"] == tokenizer_id and baseline.get("available")
+        ]
+        return round(mean(values), 6) if values else None
 
     benchmark = {
         "generated_from": {
@@ -199,6 +308,7 @@ def build() -> Path:
                 "model_vocabulary_size": systems_v3_vocab.model_vocab_size,
             },
         },
+        "tokenizer_baselines": baseline_metadata,
         "summary": {
             "semantic_sample_count": len(semantic_samples),
             "executable_system_count": len(system_rows),
@@ -219,6 +329,10 @@ def build() -> Path:
                 6,
             ),
             "max_system_char_ratio": max(row["system_char_ratio"] for row in system_rows),
+            "mean_semantic_vs_gpt2_bpe_ratio": _mean_semantic_baseline_ratio("gpt2"),
+            "mean_semantic_vs_cl100k_bpe_ratio": _mean_semantic_baseline_ratio("cl100k_base"),
+            "mean_system_vs_gpt2_bpe_ratio": _mean_system_baseline_ratio("gpt2"),
+            "mean_system_vs_cl100k_bpe_ratio": _mean_system_baseline_ratio("cl100k_base"),
         },
         "semantic_samples": semantic_samples,
         "executable_systems": system_rows,

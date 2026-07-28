@@ -11,6 +11,10 @@
     systems: [],
   };
 
+  function baselineMap(row) {
+    return new Map((row.tokenizer_baselines || []).map((item) => [item.id, item]));
+  }
+
   function isWordCharacter(char) {
     return char === "_" || /[\p{L}\p{M}\p{N}]/u.test(char);
   }
@@ -167,14 +171,16 @@
     const tokens = tokenizeLossless(text);
     const glyphs = encodeGlyphs(vocab, text);
     const binary = encodeBinary(vocab, text);
+    const characters = Array.from(text);
     const sourceBytes = new TextEncoder().encode(text).length;
     const glyphBytes = new TextEncoder().encode(glyphs).length;
     const headerBytes = BINARY_MAGIC.length + 32;
     const knownTokens = tokens.filter((token) => vocab.tokenToGlyph.has(token)).length;
     return {
-      sourceCharacters: Array.from(text).length,
+      sourceCharacters: characters.length,
       sourceTokens: tokens.length,
       knownTokens,
+      combiningMarks: characters.filter((char) => /\p{M}/u.test(char)).length,
       knownTokenRatio: (knownTokens / Math.max(1, tokens.length)).toFixed(6),
       glyphCharacters: Array.from(glyphs).length,
       sourceUtf8Bytes: sourceBytes,
@@ -182,7 +188,7 @@
       binaryBytes: binary.length,
       binaryHeaderBytes: headerBytes,
       binaryPayloadBytes: binary.length - headerBytes,
-      visualCharacterRatio: (Array.from(text).length / Math.max(1, Array.from(glyphs).length)).toFixed(6),
+      visualCharacterRatio: (characters.length / Math.max(1, Array.from(glyphs).length)).toFixed(6),
       glyphUtf8Ratio: (sourceBytes / Math.max(1, glyphBytes)).toFixed(6),
       binaryRatio: (sourceBytes / Math.max(1, binary.length)).toFixed(6),
       binaryPayloadRatio: (sourceBytes / Math.max(1, binary.length - headerBytes)).toFixed(6),
@@ -197,6 +203,8 @@
       ["Semantic samples", summary.semantic_sample_count],
       ["Executable systems", summary.executable_system_count],
       ["Mean semantic binary ratio", summary.mean_semantic_binary_ratio],
+      ["Mean semantic vs cl100k", summary.mean_semantic_vs_cl100k_bpe_ratio ?? "n/a"],
+      ["Mean system vs cl100k", summary.mean_system_vs_cl100k_bpe_ratio ?? "n/a"],
       ["Mean system char ratio", summary.mean_system_char_ratio],
     ];
     container.innerHTML = metrics
@@ -214,17 +222,22 @@
   function renderSemanticSamples(rows) {
     const body = document.getElementById("semantic-samples-body");
     body.innerHTML = rows
-      .map(
-        (row) => `
+      .map((row) => {
+        const baselines = baselineMap(row);
+        return `
           <tr>
             <td><strong>${row.label}</strong><div class="small">${row.language}</div></td>
             <td>${escapeHtml(row.text)}</td>
+            <td>${row.stats.combining_marks}</td>
+            <td>${row.stats.glyph_characters}</td>
+            <td>${baselines.get("gpt2")?.token_count ?? "n/a"}</td>
+            <td>${baselines.get("cl100k_base")?.token_count ?? "n/a"}</td>
             <td>${row.stats.known_token_ratio}</td>
             <td>${row.stats.visual_character_ratio}</td>
             <td>${row.stats.binary_ratio}</td>
           </tr>
-        `,
-      )
+        `;
+      })
       .join("");
   }
 
@@ -241,8 +254,9 @@
     });
     const body = document.getElementById("systems-body");
     body.innerHTML = filtered
-      .map(
-        (row) => `
+      .map((row) => {
+        const baselines = baselineMap(row);
+        return `
           <tr>
             <td class="glyph-cell">${row.glyph}</td>
             <td>
@@ -252,18 +266,21 @@
             </td>
             <td>${row.source_characters}</td>
             <td>${row.lossless_program_glyph_characters}</td>
+            <td>${baselines.get("gpt2")?.token_count ?? "n/a"}</td>
+            <td>${baselines.get("cl100k_base")?.token_count ?? "n/a"}</td>
             <td>${row.system_char_ratio}</td>
             <td>${row.semantic_stats_v3.binary_ratio}</td>
           </tr>
-        `,
-      )
+        `;
+      })
       .join("");
   }
 
-  function renderLiveMetrics(result) {
+  function renderLiveMetrics(result, sampleRow = null) {
     const metrics = [
       ["Source chars", result.sourceCharacters],
       ["Source tokens", result.sourceTokens],
+      ["Combining marks", result.combiningMarks],
       ["Known token ratio", result.knownTokenRatio],
       ["Glyph chars", result.glyphCharacters],
       ["Source bytes", result.sourceUtf8Bytes],
@@ -271,6 +288,11 @@
       ["Binary bytes", result.binaryBytes],
       ["Binary ratio", result.binaryRatio],
     ];
+    if (sampleRow) {
+      const baselines = baselineMap(sampleRow);
+      metrics.push(["GPT-2 BPE tokens", baselines.get("gpt2")?.token_count ?? "n/a"]);
+      metrics.push(["cl100k BPE tokens", baselines.get("cl100k_base")?.token_count ?? "n/a"]);
+    }
     document.getElementById("live-metrics").innerHTML = metrics
       .map(
         ([label, value]) => `
@@ -325,9 +347,11 @@
     const text = document.getElementById("input-text").value;
     const result = compressionStats(state.vocab, text);
     const roundTrip = decodeGlyphs(state.vocab, result.glyphs) === text;
+    const sampleRow = state.semanticSamples.find((row) => row.text === text) || null;
     document.getElementById("live-status").textContent =
-      `Round-trip ${roundTrip ? "passed" : "failed"} using the browser-side semantic codec.`;
-    renderLiveMetrics(result);
+      `Round-trip ${roundTrip ? "passed" : "failed"} using the browser-side semantic codec` +
+      `${sampleRow ? " with precomputed BPE baseline counts." : "."}`;
+    renderLiveMetrics(result, sampleRow);
   }
 
   function attachEvents() {

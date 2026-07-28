@@ -95,6 +95,14 @@ The page reports semantic visible-glyph ratios, binary ratios, lossless
 programming glyph ratios, and the fixed one-glyph executable-system IDs as
 separate benchmark surfaces.
 
+It also includes a dedicated decomposed-Unicode sample so combining diacritics
+such as `e + ◌́` and `i + ◌̈` are measured explicitly in the public benchmark,
+not only covered implicitly by the tokenizer.
+
+When `tiktoken` is available, the generator also emits real tokenizer baseline
+counts for `gpt2` and `cl100k_base` so GlyphMatics sequence lengths can be
+compared directly against established BPE encodings.
+
 ## Encode, decode, and inspect meaning
 
 ```bash

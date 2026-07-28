@@ -44,6 +44,12 @@ def _is_word_character(char: str) -> bool:
     return char == "_" or unicodedata.category(char)[0] in {"L", "M", "N"}
 
 
+def count_combining_marks(text: str) -> int:
+    """Count Unicode combining marks without normalizing the source text."""
+
+    return sum(unicodedata.category(char)[0] == "M" for char in text)
+
+
 def tokenize_lossless(text: str) -> list[str]:
     """Split text without normalization and preserve every code point.
 
@@ -125,6 +131,7 @@ class CompressionStats:
     source_characters: int
     source_tokens: int
     known_tokens: int
+    combining_marks: int
     glyph_characters: int
     source_utf8_bytes: int
     glyph_utf8_bytes: int
@@ -351,6 +358,7 @@ class SemanticVocabulary:
             source_characters=len(text),
             source_tokens=len(tokens),
             known_tokens=sum(token in self.token_to_id for token in tokens),
+            combining_marks=count_combining_marks(text),
             glyph_characters=len(glyphs),
             source_utf8_bytes=len(text.encode("utf-8")),
             glyph_utf8_bytes=len(glyphs.encode("utf-8")),

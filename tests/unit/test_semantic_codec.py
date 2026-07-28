@@ -2,7 +2,12 @@ import json
 
 import pytest
 
-from glyphmatics.semantic_codec import SemanticVocabulary, iter_glyphs, tokenize_lossless
+from glyphmatics.semantic_codec import (
+    SemanticVocabulary,
+    count_combining_marks,
+    iter_glyphs,
+    tokenize_lossless,
+)
 
 
 def vocabulary():
@@ -68,6 +73,19 @@ def test_multilingual_semantics_are_retained():
 def test_combining_scripts_and_layout_are_lossless():
     text = "मैं घर में हूँ।\nالعربيةُ هنا"
     assert "".join(tokenize_lossless(text)) == text
+
+
+def test_decomposed_combining_diacritics_round_trip_and_count():
+    codec = vocabulary()
+    text = "Cafe\u0301 nai\u0308ve coo\u0308perate A\u0301"
+    glyphs = codec.encode_glyphs(text)
+    binary = codec.encode_binary(text)
+    stats = codec.compression_stats(text)
+    assert codec.decode_glyphs(glyphs) == text
+    assert codec.decode_binary(binary) == text
+    assert "".join(tokenize_lossless(text)) == text
+    assert count_combining_marks(text) == 4
+    assert stats.combining_marks == 4
 
 
 def test_vocabulary_checksum_rejects_mutation(tmp_path):

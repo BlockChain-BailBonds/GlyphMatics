@@ -100,14 +100,30 @@
       "model_vocabulary_size": 551
     }
   },
+  "tokenizer_baselines": [
+    {
+      "id": "gpt2",
+      "label": "GPT-2 BPE",
+      "available": true
+    },
+    {
+      "id": "cl100k_base",
+      "label": "cl100k BPE",
+      "available": true
+    }
+  ],
   "summary": {
-    "semantic_sample_count": 7,
+    "semantic_sample_count": 8,
     "executable_system_count": 50,
-    "mean_semantic_binary_ratio": 0.478909,
-    "mean_semantic_visual_character_ratio": 2.370238,
+    "mean_semantic_binary_ratio": 0.471862,
+    "mean_semantic_visual_character_ratio": 2.159485,
     "mean_lossless_program_char_ratio": 0.710869,
     "mean_system_char_ratio": 257.52,
-    "max_system_char_ratio": 698.0
+    "max_system_char_ratio": 698.0,
+    "mean_semantic_vs_gpt2_bpe_ratio": 1.953838,
+    "mean_semantic_vs_cl100k_bpe_ratio": 1.336842,
+    "mean_system_vs_gpt2_bpe_ratio": 0.307327,
+    "mean_system_vs_cl100k_bpe_ratio": 0.192544
   },
   "semantic_samples": [
     {
@@ -120,6 +136,7 @@
         "source_characters": 21,
         "source_tokens": 8,
         "known_tokens": 8,
+        "combining_marks": 0,
         "glyph_characters": 8,
         "source_utf8_bytes": 21,
         "glyph_utf8_bytes": 24,
@@ -132,6 +149,20 @@
         "binary_ratio": 0.428571,
         "binary_payload_ratio": 1.75
       },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 5
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 5
+        }
+      ],
       "glyph_preview": {
         "text": "",
         "truncated": false
@@ -149,6 +180,7 @@
         "source_characters": 5,
         "source_tokens": 2,
         "known_tokens": 2,
+        "combining_marks": 0,
         "glyph_characters": 2,
         "source_utf8_bytes": 15,
         "glyph_utf8_bytes": 6,
@@ -161,6 +193,20 @@
         "binary_ratio": 0.365854,
         "binary_payload_ratio": 3.75
       },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 9
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 5
+        }
+      ],
       "glyph_preview": {
         "text": "",
         "truncated": false
@@ -178,6 +224,7 @@
         "source_characters": 18,
         "source_tokens": 8,
         "known_tokens": 8,
+        "combining_marks": 0,
         "glyph_characters": 8,
         "source_utf8_bytes": 20,
         "glyph_utf8_bytes": 24,
@@ -190,6 +237,20 @@
         "binary_ratio": 0.408163,
         "binary_payload_ratio": 1.666667
       },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 8
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 5
+        }
+      ],
       "glyph_preview": {
         "text": "",
         "truncated": false
@@ -207,6 +268,7 @@
         "source_characters": 16,
         "source_tokens": 6,
         "known_tokens": 6,
+        "combining_marks": 6,
         "glyph_characters": 6,
         "source_utf8_bytes": 44,
         "glyph_utf8_bytes": 18,
@@ -219,6 +281,20 @@
         "binary_ratio": 0.93617,
         "binary_payload_ratio": 4.4
       },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 26
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 17
+        }
+      ],
       "glyph_preview": {
         "text": "",
         "truncated": false
@@ -236,6 +312,7 @@
         "source_characters": 18,
         "source_tokens": 6,
         "known_tokens": 6,
+        "combining_marks": 0,
         "glyph_characters": 6,
         "source_utf8_bytes": 33,
         "glyph_utf8_bytes": 18,
@@ -248,6 +325,20 @@
         "binary_ratio": 0.717391,
         "binary_payload_ratio": 3.666667
       },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 21
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 13
+        }
+      ],
       "glyph_preview": {
         "text": "",
         "truncated": false
@@ -265,6 +356,7 @@
         "source_characters": 9,
         "source_tokens": 5,
         "known_tokens": 5,
+        "combining_marks": 0,
         "glyph_characters": 5,
         "source_utf8_bytes": 9,
         "glyph_utf8_bytes": 15,
@@ -277,6 +369,20 @@
         "binary_ratio": 0.204545,
         "binary_payload_ratio": 1.285714
       },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 3
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 4
+        }
+      ],
       "glyph_preview": {
         "text": "",
         "truncated": false
@@ -294,6 +400,7 @@
         "source_characters": 14,
         "source_tokens": 8,
         "known_tokens": 8,
+        "combining_marks": 0,
         "glyph_characters": 8,
         "source_utf8_bytes": 14,
         "glyph_utf8_bytes": 24,
@@ -306,8 +413,66 @@
         "binary_ratio": 0.291667,
         "binary_payload_ratio": 1.272727
       },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 5
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 6
+        }
+      ],
       "glyph_preview": {
         "text": "",
+        "truncated": false
+      },
+      "binary_preview_hex": "56494c4331eba68f1c1b142c1abd9eedb1de8929c1c2a0b8ad25e9b5584100ff",
+      "lossless_roundtrip": true
+    },
+    {
+      "id": "combining-diacritics",
+      "label": "Combining Diacritics",
+      "language": "und",
+      "text": "Café naïve coöperate Á",
+      "source": "glyphmatics/combining-diacritic-sample",
+      "stats": {
+        "source_characters": 26,
+        "source_tokens": 7,
+        "known_tokens": 3,
+        "combining_marks": 4,
+        "glyph_characters": 38,
+        "source_utf8_bytes": 30,
+        "glyph_utf8_bytes": 114,
+        "binary_bytes": 71,
+        "binary_header_bytes": 37,
+        "binary_payload_bytes": 34,
+        "known_token_ratio": 0.428571,
+        "visual_character_ratio": 0.684211,
+        "glyph_utf8_ratio": 0.263158,
+        "binary_ratio": 0.422535,
+        "binary_payload_ratio": 0.882353
+      },
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 17
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 15
+        }
+      ],
+      "glyph_preview": {
+        "text": "⡃⡡⡦⡥⣌⢁⡮⡡⡩⣌⢈⡶⡥⡣⡯⡯⣌⢈⡰⡥⡲⡡⡴⡥⡁⣌⢁",
         "truncated": false
       },
       "binary_preview_hex": "56494c4331eba68f1c1b142c1abd9eedb1de8929c1c2a0b8ad25e9b5584100ff",
@@ -339,10 +504,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 77.0,
       "lossless_program_char_ratio": 0.733333,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 31
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 20
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 77,
         "source_tokens": 32,
         "known_tokens": 29,
+        "combining_marks": 0,
         "glyph_characters": 53,
         "source_utf8_bytes": 77,
         "glyph_utf8_bytes": 159,
@@ -380,10 +560,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 133.0,
       "lossless_program_char_ratio": 0.692708,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 54
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 37
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 133,
         "source_tokens": 62,
         "known_tokens": 59,
+        "combining_marks": 0,
         "glyph_characters": 81,
         "source_utf8_bytes": 133,
         "glyph_utf8_bytes": 243,
@@ -421,10 +616,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 101.0,
       "lossless_program_char_ratio": 0.651613,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 47
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 34
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 101,
         "source_tokens": 48,
         "known_tokens": 47,
+        "combining_marks": 0,
         "glyph_characters": 57,
         "source_utf8_bytes": 101,
         "glyph_utf8_bytes": 171,
@@ -462,10 +672,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 129.0,
       "lossless_program_char_ratio": 0.648241,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 56
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 42
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 129,
         "source_tokens": 52,
         "known_tokens": 51,
+        "combining_marks": 0,
         "glyph_characters": 61,
         "source_utf8_bytes": 129,
         "glyph_utf8_bytes": 183,
@@ -503,10 +728,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 208.0,
       "lossless_program_char_ratio": 0.705085,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 87
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 57
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 208,
         "source_tokens": 88,
         "known_tokens": 87,
+        "combining_marks": 0,
         "glyph_characters": 97,
         "source_utf8_bytes": 208,
         "glyph_utf8_bytes": 291,
@@ -544,10 +784,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 194.0,
       "lossless_program_char_ratio": 0.718519,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 81
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 53
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 194,
         "source_tokens": 75,
         "known_tokens": 74,
+        "combining_marks": 0,
         "glyph_characters": 84,
         "source_utf8_bytes": 194,
         "glyph_utf8_bytes": 252,
@@ -585,10 +840,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 264.0,
       "lossless_program_char_ratio": 0.778761,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 119
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 74
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 264,
         "source_tokens": 103,
         "known_tokens": 102,
+        "combining_marks": 0,
         "glyph_characters": 112,
         "source_utf8_bytes": 264,
         "glyph_utf8_bytes": 336,
@@ -626,10 +896,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 103.0,
       "lossless_program_char_ratio": 0.673203,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 46
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 29
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 103,
         "source_tokens": 47,
         "known_tokens": 45,
+        "combining_marks": 0,
         "glyph_characters": 64,
         "source_utf8_bytes": 103,
         "glyph_utf8_bytes": 192,
@@ -667,10 +952,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 243.0,
       "lossless_program_char_ratio": 0.731928,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 86
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 61
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 243,
         "source_tokens": 97,
         "known_tokens": 91,
+        "combining_marks": 0,
         "glyph_characters": 134,
         "source_utf8_bytes": 243,
         "glyph_utf8_bytes": 402,
@@ -708,10 +1008,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 126.0,
       "lossless_program_char_ratio": 0.741176,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 55
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 34
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 126,
         "source_tokens": 49,
         "known_tokens": 41,
+        "combining_marks": 0,
         "glyph_characters": 85,
         "source_utf8_bytes": 126,
         "glyph_utf8_bytes": 255,
@@ -749,10 +1064,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 222.0,
       "lossless_program_char_ratio": 0.709265,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 100
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 66
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 222,
         "source_tokens": 95,
         "known_tokens": 84,
+        "combining_marks": 0,
         "glyph_characters": 142,
         "source_utf8_bytes": 222,
         "glyph_utf8_bytes": 426,
@@ -790,10 +1120,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 150.0,
       "lossless_program_char_ratio": 0.735294,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 60
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 43
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 150,
         "source_tokens": 67,
         "known_tokens": 61,
+        "combining_marks": 0,
         "glyph_characters": 101,
         "source_utf8_bytes": 150,
         "glyph_utf8_bytes": 303,
@@ -831,10 +1176,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 133.0,
       "lossless_program_char_ratio": 0.689119,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 56
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 40
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 133,
         "source_tokens": 65,
         "known_tokens": 60,
+        "combining_marks": 0,
         "glyph_characters": 98,
         "source_utf8_bytes": 133,
         "glyph_utf8_bytes": 294,
@@ -872,10 +1232,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 407.0,
       "lossless_program_char_ratio": 0.720354,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 166
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 92
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 407,
         "source_tokens": 133,
         "known_tokens": 126,
+        "combining_marks": 0,
         "glyph_characters": 166,
         "source_utf8_bytes": 407,
         "glyph_utf8_bytes": 498,
@@ -913,10 +1288,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 348.0,
       "lossless_program_char_ratio": 0.725,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 143
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 81
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 348,
         "source_tokens": 128,
         "known_tokens": 123,
+        "combining_marks": 0,
         "glyph_characters": 151,
         "source_utf8_bytes": 348,
         "glyph_utf8_bytes": 453,
@@ -954,10 +1344,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 221.0,
       "lossless_program_char_ratio": 0.756849,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 104
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 53
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 221,
         "source_tokens": 82,
         "known_tokens": 72,
+        "combining_marks": 0,
         "glyph_characters": 143,
         "source_utf8_bytes": 221,
         "glyph_utf8_bytes": 429,
@@ -995,10 +1400,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 154.0,
       "lossless_program_char_ratio": 0.712963,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 65
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 46
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 154,
         "source_tokens": 72,
         "known_tokens": 65,
+        "combining_marks": 0,
         "glyph_characters": 105,
         "source_utf8_bytes": 154,
         "glyph_utf8_bytes": 315,
@@ -1036,10 +1456,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 130.0,
       "lossless_program_char_ratio": 0.730337,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 52
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 34
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 130,
         "source_tokens": 50,
         "known_tokens": 47,
+        "combining_marks": 0,
         "glyph_characters": 77,
         "source_utf8_bytes": 130,
         "glyph_utf8_bytes": 231,
@@ -1077,10 +1512,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 144.0,
       "lossless_program_char_ratio": 0.705882,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 57
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 37
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 144,
         "source_tokens": 60,
         "known_tokens": 55,
+        "combining_marks": 0,
         "glyph_characters": 89,
         "source_utf8_bytes": 144,
         "glyph_utf8_bytes": 267,
@@ -1118,10 +1568,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 126.0,
       "lossless_program_char_ratio": 0.663158,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 54
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 41
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 126,
         "source_tokens": 54,
         "known_tokens": 53,
+        "combining_marks": 0,
         "glyph_characters": 63,
         "source_utf8_bytes": 126,
         "glyph_utf8_bytes": 189,
@@ -1159,10 +1624,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 180.0,
       "lossless_program_char_ratio": 0.762712,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 91
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 45
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 180,
         "source_tokens": 58,
         "known_tokens": 57,
+        "combining_marks": 0,
         "glyph_characters": 67,
         "source_utf8_bytes": 180,
         "glyph_utf8_bytes": 201,
@@ -1200,10 +1680,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 218.0,
       "lossless_program_char_ratio": 0.698718,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 91
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 55
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 218,
         "source_tokens": 86,
         "known_tokens": 85,
+        "combining_marks": 0,
         "glyph_characters": 95,
         "source_utf8_bytes": 218,
         "glyph_utf8_bytes": 285,
@@ -1241,10 +1736,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 269.0,
       "lossless_program_char_ratio": 0.691517,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 126
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 76
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 269,
         "source_tokens": 114,
         "known_tokens": 110,
+        "combining_marks": 0,
         "glyph_characters": 139,
         "source_utf8_bytes": 269,
         "glyph_utf8_bytes": 417,
@@ -1282,10 +1792,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 295.0,
       "lossless_program_char_ratio": 0.690867,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 113
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 75
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 295,
         "source_tokens": 119,
         "known_tokens": 113,
+        "combining_marks": 0,
         "glyph_characters": 156,
         "source_utf8_bytes": 295,
         "glyph_utf8_bytes": 468,
@@ -1323,10 +1848,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 249.0,
       "lossless_program_char_ratio": 0.682192,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 109
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 78
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 249,
         "source_tokens": 112,
         "known_tokens": 111,
+        "combining_marks": 0,
         "glyph_characters": 121,
         "source_utf8_bytes": 249,
         "glyph_utf8_bytes": 363,
@@ -1364,10 +1904,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 347.0,
       "lossless_program_char_ratio": 0.691235,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 172
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 81
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 347,
         "source_tokens": 144,
         "known_tokens": 143,
+        "combining_marks": 0,
         "glyph_characters": 153,
         "source_utf8_bytes": 347,
         "glyph_utf8_bytes": 459,
@@ -1405,10 +1960,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 344.0,
       "lossless_program_char_ratio": 0.739785,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 154
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 86
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 344,
         "source_tokens": 135,
         "known_tokens": 132,
+        "combining_marks": 0,
         "glyph_characters": 155,
         "source_utf8_bytes": 344,
         "glyph_utf8_bytes": 465,
@@ -1446,10 +2016,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 389.0,
       "lossless_program_char_ratio": 0.666096,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 195
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 122
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 389,
         "source_tokens": 165,
         "known_tokens": 164,
+        "combining_marks": 0,
         "glyph_characters": 174,
         "source_utf8_bytes": 389,
         "glyph_utf8_bytes": 522,
@@ -1487,10 +2072,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 397.0,
       "lossless_program_char_ratio": 0.689236,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 158
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 118
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 397,
         "source_tokens": 173,
         "known_tokens": 172,
+        "combining_marks": 0,
         "glyph_characters": 182,
         "source_utf8_bytes": 397,
         "glyph_utf8_bytes": 546,
@@ -1528,10 +2128,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 150.0,
       "lossless_program_char_ratio": 0.649351,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 66
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 51
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 150,
         "source_tokens": 78,
         "known_tokens": 77,
+        "combining_marks": 0,
         "glyph_characters": 87,
         "source_utf8_bytes": 150,
         "glyph_utf8_bytes": 261,
@@ -1569,10 +2184,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 538.0,
       "lossless_program_char_ratio": 0.726046,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 284
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 135
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 538,
         "source_tokens": 214,
         "known_tokens": 201,
+        "combining_marks": 0,
         "glyph_characters": 247,
         "source_utf8_bytes": 538,
         "glyph_utf8_bytes": 741,
@@ -1610,10 +2240,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 418.0,
       "lossless_program_char_ratio": 0.69783,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 208
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 113
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 418,
         "source_tokens": 183,
         "known_tokens": 174,
+        "combining_marks": 0,
         "glyph_characters": 208,
         "source_utf8_bytes": 418,
         "glyph_utf8_bytes": 624,
@@ -1651,10 +2296,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 526.0,
       "lossless_program_char_ratio": 0.712737,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 289
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 145
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 526,
         "source_tokens": 219,
         "known_tokens": 208,
+        "combining_marks": 0,
         "glyph_characters": 248,
         "source_utf8_bytes": 526,
         "glyph_utf8_bytes": 744,
@@ -1692,10 +2352,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 698.0,
       "lossless_program_char_ratio": 0.710071,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 311
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 169
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 698,
         "source_tokens": 251,
         "known_tokens": 244,
+        "combining_marks": 0,
         "glyph_characters": 290,
         "source_utf8_bytes": 698,
         "glyph_utf8_bytes": 870,
@@ -1733,10 +2408,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 297.0,
       "lossless_program_char_ratio": 0.697183,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 129
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 83
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 297,
         "source_tokens": 124,
         "known_tokens": 120,
+        "combining_marks": 0,
         "glyph_characters": 139,
         "source_utf8_bytes": 297,
         "glyph_utf8_bytes": 417,
@@ -1774,10 +2464,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 456.0,
       "lossless_program_char_ratio": 0.743883,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 172
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 102
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 456,
         "source_tokens": 153,
         "known_tokens": 152,
+        "combining_marks": 0,
         "glyph_characters": 162,
         "source_utf8_bytes": 456,
         "glyph_utf8_bytes": 486,
@@ -1815,10 +2520,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 272.0,
       "lossless_program_char_ratio": 0.717678,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 121
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 69
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 272,
         "source_tokens": 110,
         "known_tokens": 102,
+        "combining_marks": 0,
         "glyph_characters": 163,
         "source_utf8_bytes": 272,
         "glyph_utf8_bytes": 489,
@@ -1856,10 +2576,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 153.0,
       "lossless_program_char_ratio": 0.686099,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 58
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 41
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 153,
         "source_tokens": 63,
         "known_tokens": 60,
+        "combining_marks": 0,
         "glyph_characters": 86,
         "source_utf8_bytes": 153,
         "glyph_utf8_bytes": 258,
@@ -1897,10 +2632,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 318.0,
       "lossless_program_char_ratio": 0.700441,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 124
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 76
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 318,
         "source_tokens": 110,
         "known_tokens": 108,
+        "combining_marks": 0,
         "glyph_characters": 125,
         "source_utf8_bytes": 318,
         "glyph_utf8_bytes": 375,
@@ -1938,10 +2688,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 99.0,
       "lossless_program_char_ratio": 0.692308,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 44
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 26
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 99,
         "source_tokens": 40,
         "known_tokens": 38,
+        "combining_marks": 0,
         "glyph_characters": 55,
         "source_utf8_bytes": 99,
         "glyph_utf8_bytes": 165,
@@ -1979,10 +2744,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 162.0,
       "lossless_program_char_ratio": 0.723214,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 70
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 46
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 162,
         "source_tokens": 60,
         "known_tokens": 57,
+        "combining_marks": 0,
         "glyph_characters": 79,
         "source_utf8_bytes": 162,
         "glyph_utf8_bytes": 237,
@@ -2020,10 +2800,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 162.0,
       "lossless_program_char_ratio": 0.723214,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 67
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 43
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 162,
         "source_tokens": 60,
         "known_tokens": 57,
+        "combining_marks": 0,
         "glyph_characters": 79,
         "source_utf8_bytes": 162,
         "glyph_utf8_bytes": 237,
@@ -2061,10 +2856,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 413.0,
       "lossless_program_char_ratio": 0.780718,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 164
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 104
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 413,
         "source_tokens": 165,
         "known_tokens": 147,
+        "combining_marks": 0,
         "glyph_characters": 273,
         "source_utf8_bytes": 413,
         "glyph_utf8_bytes": 819,
@@ -2102,10 +2912,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 362.0,
       "lossless_program_char_ratio": 0.729839,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 143
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 84
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 362,
         "source_tokens": 117,
         "known_tokens": 116,
+        "combining_marks": 0,
         "glyph_characters": 126,
         "source_utf8_bytes": 362,
         "glyph_utf8_bytes": 378,
@@ -2143,10 +2968,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 198.0,
       "lossless_program_char_ratio": 0.655629,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 80
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 62
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 198,
         "source_tokens": 96,
         "known_tokens": 92,
+        "combining_marks": 0,
         "glyph_characters": 126,
         "source_utf8_bytes": 198,
         "glyph_utf8_bytes": 378,
@@ -2184,10 +3024,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 115.0,
       "lossless_program_char_ratio": 0.66474,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 50
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 37
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 115,
         "source_tokens": 52,
         "known_tokens": 51,
+        "combining_marks": 0,
         "glyph_characters": 61,
         "source_utf8_bytes": 115,
         "glyph_utf8_bytes": 183,
@@ -2225,10 +3080,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 262.0,
       "lossless_program_char_ratio": 0.766082,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 120
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 76
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 262,
         "source_tokens": 119,
         "known_tokens": 110,
+        "combining_marks": 0,
         "glyph_characters": 154,
         "source_utf8_bytes": 262,
         "glyph_utf8_bytes": 462,
@@ -2266,10 +3136,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 212.0,
       "lossless_program_char_ratio": 0.688312,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 84
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 54
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 212,
         "source_tokens": 89,
         "known_tokens": 84,
+        "combining_marks": 0,
         "glyph_characters": 120,
         "source_utf8_bytes": 212,
         "glyph_utf8_bytes": 360,
@@ -2307,10 +3192,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 570.0,
       "lossless_program_char_ratio": 0.785124,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 268
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 129
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 570,
         "source_tokens": 197,
         "known_tokens": 190,
+        "combining_marks": 0,
         "glyph_characters": 218,
         "source_utf8_bytes": 570,
         "glyph_utf8_bytes": 654,
@@ -2348,10 +3248,25 @@
       "system_glyph_characters": 1,
       "system_char_ratio": 194.0,
       "lossless_program_char_ratio": 0.757812,
+      "tokenizer_baselines": [
+        {
+          "id": "gpt2",
+          "label": "GPT-2 BPE",
+          "available": true,
+          "token_count": 76
+        },
+        {
+          "id": "cl100k_base",
+          "label": "cl100k BPE",
+          "available": true,
+          "token_count": 47
+        }
+      ],
       "semantic_stats_v3": {
         "source_characters": 194,
         "source_tokens": 71,
         "known_tokens": 62,
+        "combining_marks": 0,
         "glyph_characters": 109,
         "source_utf8_bytes": 194,
         "glyph_utf8_bytes": 327,
