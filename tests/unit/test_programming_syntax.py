@@ -78,6 +78,11 @@ def test_aligned_training_rows_cover_every_language_and_intent():
         assert row["canonical_glyphs"].startswith("⌘")
 
 
+def test_program_training_rows_are_unique_across_repeat_variants():
+    rows = list(iter_program_training_rows(repeats=2))
+    assert len(rows) == len({row["text"] for row in rows})
+
+
 def test_executable_system_inventory_has_fifty_unique_glyphs():
     assert len(EXECUTABLE_SYSTEMS) == 50
     glyphs = [system.glyph for system in EXECUTABLE_SYSTEMS]
@@ -102,6 +107,11 @@ def test_executable_system_rows_cover_every_system():
         assert row["language"] == "code:python"
         assert row["tokens"]
         assert row["canonical_glyphs"].startswith("⌘")
+
+
+def test_executable_system_rows_are_unique_across_repeat_variants():
+    rows = list(iter_executable_system_rows(repeats=2))
+    assert len(rows) == len({row["text"] for row in rows})
 
 
 def test_language_aliases_are_deterministic():

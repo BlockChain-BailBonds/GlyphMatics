@@ -97,6 +97,24 @@ LANGUAGE_GLYPHS: dict[str, str] = {
     "sql": "Ⓢ",
 }
 
+COMMENT_STYLES: dict[str, tuple[str, str]] = {
+    "python": ("# ", ""),
+    "javascript": ("// ", ""),
+    "typescript": ("// ", ""),
+    "rust": ("// ", ""),
+    "go": ("// ", ""),
+    "java": ("// ", ""),
+    "c": ("// ", ""),
+    "cpp": ("// ", ""),
+    "csharp": ("// ", ""),
+    "ruby": ("# ", ""),
+    "php": ("// ", ""),
+    "swift": ("// ", ""),
+    "kotlin": ("// ", ""),
+    "bash": ("# ", ""),
+    "sql": ("/* ", " */"),
+}
+
 COMMON_SYNTAX: dict[str, str] = {
     "===": "EQUAL", "!==": "NOT_EQUAL", "==": "EQUAL", "!=": "NOT_EQUAL",
     "<=": "LESS_EQUAL", ">=": "GREATER_EQUAL", "&&": "AND", "||": "OR",
@@ -259,6 +277,14 @@ def normalize_language(language: str) -> str:
 
 def programming_language_token(language: str) -> str:
     return f"⟪CODE:{normalize_language(language)}⟫"
+
+
+def annotate_program_source(source: str, language: str, *, variant: int, label: str) -> str:
+    normalized = normalize_language(language)
+    prefix, suffix = COMMENT_STYLES[normalized]
+    note = f"{prefix}glyphmatics {normalized} {label} variant {variant:03d}{suffix}"
+    separator = "" if note.endswith("\n") else "\n"
+    return f"{note}{separator}{source}"
 
 
 def language_lexicon(language: str) -> dict[str, str]:
@@ -1805,8 +1831,14 @@ def iter_program_training_rows(repeats: int = 16) -> Iterator[dict[str, object]]
     for repeat in range(repeats):
         for example in PROGRAM_EXAMPLES:
             for language, source in sorted(example.sources.items()):
+                annotated_source = annotate_program_source(
+                    source,
+                    language,
+                    variant=repeat,
+                    label=example.intent,
+                )
                 yield {
-                    "text": source,
+                    "text": annotated_source,
                     "language": f"code:{language}",
                     "source": "glyphmatics/programming_syntax",
                     "programming_language": language,
@@ -1814,7 +1846,7 @@ def iter_program_training_rows(repeats: int = 16) -> Iterator[dict[str, object]]
                     "tokens": [
                         programming_language_token(language),
                         PROGRAM_SOURCE_TOKEN,
-                        *tokenize_program(source, language),
+                        *tokenize_program(annotated_source, language),
                         PROGRAM_IR_TOKEN,
                         *example.canonical_tokens,
                     ],
@@ -1829,8 +1861,14 @@ def iter_executable_system_rows(repeats: int = 16) -> Iterator[dict[str, object]
         raise ValueError("executable system repeats must be positive")
     for repeat in range(repeats):
         for system in EXECUTABLE_SYSTEMS:
+            annotated_source = annotate_program_source(
+                system.source,
+                "python",
+                variant=repeat,
+                label=system.system_id.lower(),
+            )
             yield {
-                "text": system.source,
+                "text": annotated_source,
                 "language": "code:python",
                 "source": "glyphmatics/executable_systems",
                 "programming_language": "python",
@@ -1840,7 +1878,7 @@ def iter_executable_system_rows(repeats: int = 16) -> Iterator[dict[str, object]
                 "tokens": [
                     programming_language_token("python"),
                     PROGRAM_SOURCE_TOKEN,
-                    *tokenize_program(system.source, "python"),
+                    *tokenize_program(annotated_source, "python"),
                     PROGRAM_IR_TOKEN,
                     system.token,
                     *system.canonical_tokens,

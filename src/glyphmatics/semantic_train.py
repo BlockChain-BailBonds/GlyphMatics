@@ -16,7 +16,7 @@ import numpy as np
 import torch
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel
-from torch.utils.data import DataLoader, Dataset, DistributedSampler, RandomSampler, random_split
+from torch.utils.data import DataLoader, Dataset, DistributedSampler, RandomSampler, Subset, random_split
 
 from .semantic_codec import BOS_ID, EOS_ID, SemanticVocabulary
 from .semantic_lm import ModelConfig, SemanticGlyphLM, load_checkpoint, save_checkpoint
@@ -59,6 +59,9 @@ class TrainConfig:
     checkpoint_every: int = 0
     compile_model: bool = False
     num_workers: int = 0
+    train_eval_fraction: float = 0.1
+    early_stopping_patience: int = 0
+    early_stopping_min_delta: float = 0.0
 
     def validate(self) -> None:
         if self.steps < 1:
@@ -79,6 +82,14 @@ class TrainConfig:
             raise ValueError("checkpoint_every must be non-negative")
         if self.num_workers < 0:
             raise ValueError("num_workers must be non-negative")
+        if not 0 < self.train_eval_fraction <= 1:
+            raise ValueError("train_eval_fraction must be between 0 and 1")
+        if self.early_stopping_patience < 0:
+            raise ValueError("early_stopping_patience must be non-negative")
+        if self.early_stopping_min_delta < 0:
+            raise ValueError("early_stopping_min_delta must be non-negative")
+        if self.early_stopping_patience and self.checkpoint_every <= 0:
+            raise ValueError("checkpoint_every must be positive when early_stopping_patience is enabled")
 
 
 @dataclass(frozen=True)
@@ -338,6 +349,22 @@ def _evaluate(
     return {"loss": mean_loss, "perplexity": math.exp(min(mean_loss, 20))}
 
 
+def _sample_subset(
+    dataset: Dataset[tuple[torch.Tensor, torch.Tensor]],
+    *,
+    fraction: float,
+    seed: int,
+) -> Dataset[tuple[torch.Tensor, torch.Tensor]]:
+    if fraction >= 1 or len(dataset) <= 1:
+        return dataset
+    sample_size = max(1, round(len(dataset) * fraction))
+    if sample_size >= len(dataset):
+        return dataset
+    generator = torch.Generator().manual_seed(seed)
+    indices = torch.randperm(len(dataset), generator=generator)[:sample_size].tolist()
+    return Subset(dataset, indices)
+
+
 def _make_run_state(
     *,
     train_config: TrainConfig,
@@ -350,12 +377,16 @@ def _make_run_state(
     validation_size: int,
     losses: list[float],
     validation_metrics: dict[str, float],
+    train_eval_metrics: dict[str, float] | None,
     parameter_count: int,
     elapsed_seconds: float,
     device: torch.device,
     distributed_state: DistributedState,
+    best_validation_loss: float | None = None,
+    best_step: int | None = None,
+    stopped_early: bool = False,
 ) -> dict[str, Any]:
-    return {
+    payload = {
         "preset": train_config.preset,
         "steps": train_config.steps,
         "batch_size": train_config.batch_size,
@@ -388,6 +419,17 @@ def _make_run_state(
             "backend": distributed_state.backend,
         },
     }
+    if train_eval_metrics is not None:
+        payload["train_eval_loss"] = train_eval_metrics["loss"]
+        payload["train_eval_perplexity"] = train_eval_metrics["perplexity"]
+        payload["generalization_gap"] = validation_metrics["loss"] - train_eval_metrics["loss"]
+    if best_validation_loss is not None:
+        payload["best_validation_loss"] = best_validation_loss
+    if best_step is not None:
+        payload["best_step"] = best_step
+    if stopped_early:
+        payload["stopped_early"] = True
+    return payload
 
 
 def _maybe_broadcast_metrics(metrics: dict[str, float], distributed_state: DistributedState) -> dict[str, float]:
@@ -424,6 +466,9 @@ def train(
     checkpoint_every: int = 0,
     compile_model: bool = False,
     num_workers: int = 0,
+    train_eval_fraction: float = 0.1,
+    early_stopping_patience: int = 0,
+    early_stopping_min_delta: float = 0.0,
 ) -> dict[str, Any]:
     train_config = TrainConfig(
         vocabulary_path=vocabulary_path,
@@ -450,6 +495,9 @@ def train(
         checkpoint_every=checkpoint_every,
         compile_model=compile_model,
         num_workers=num_workers,
+        train_eval_fraction=train_eval_fraction,
+        early_stopping_patience=early_stopping_patience,
+        early_stopping_min_delta=early_stopping_min_delta,
     )
     train_config.validate()
 
@@ -480,6 +528,11 @@ def train(
             dataset,
             [training_size, validation_size],
             generator=generator,
+        )
+        train_eval_dataset = _sample_subset(
+            training_dataset,
+            fraction=train_eval_fraction,
+            seed=seed + 7,
         )
 
         training_sampler = None
@@ -562,6 +615,42 @@ def train(
         start_time = time.monotonic()
         epoch_index = 0
         model.train()
+        best_validation_loss: float | None = None
+        best_step: int | None = None
+        stale_evaluations = 0
+        stopped_early = False
+
+        def compute_metrics() -> tuple[dict[str, float], dict[str, float]]:
+            if distributed_state.enabled:
+                dist.barrier()
+            train_eval_metrics = (
+                _evaluate(
+                    model,
+                    train_eval_dataset,
+                    batch_size=batch_size,
+                    device=device,
+                    use_amp=use_amp,
+                    num_workers=num_workers,
+                )
+                if distributed_state.is_main
+                else {"loss": 0.0, "perplexity": 0.0}
+            )
+            validation_metrics = (
+                _evaluate(
+                    model,
+                    validation_dataset,
+                    batch_size=batch_size,
+                    device=device,
+                    use_amp=use_amp,
+                    num_workers=num_workers,
+                )
+                if distributed_state.is_main
+                else {"loss": 0.0, "perplexity": 0.0}
+            )
+            return (
+                _maybe_broadcast_metrics(train_eval_metrics, distributed_state),
+                _maybe_broadcast_metrics(validation_metrics, distributed_state),
+            )
 
         for step in range(start_step + 1, steps + 1):
             optimizer.zero_grad(set_to_none=True)
@@ -623,17 +712,17 @@ def train(
                     flush=True,
                 )
             if checkpoint_every and step < steps and step % checkpoint_every == 0:
-                if distributed_state.enabled:
-                    dist.barrier()
-                validation_metrics = _evaluate(
-                    model,
-                    validation_dataset,
-                    batch_size=batch_size,
-                    device=device,
-                    use_amp=use_amp,
-                    num_workers=num_workers,
-                ) if distributed_state.is_main else {"loss": 0.0, "perplexity": 0.0}
-                validation_metrics = _maybe_broadcast_metrics(validation_metrics, distributed_state)
+                train_eval_metrics, validation_metrics = compute_metrics()
+                improved = (
+                    best_validation_loss is None
+                    or validation_metrics["loss"] < (best_validation_loss - early_stopping_min_delta)
+                )
+                if improved:
+                    best_validation_loss = validation_metrics["loss"]
+                    best_step = step
+                    stale_evaluations = 0
+                else:
+                    stale_evaluations += 1
                 if distributed_state.is_main:
                     training = _make_run_state(
                         train_config=train_config,
@@ -646,10 +735,13 @@ def train(
                         validation_size=validation_size,
                         losses=losses,
                         validation_metrics=validation_metrics,
+                        train_eval_metrics=train_eval_metrics,
                         parameter_count=_parameter_count(model),
                         elapsed_seconds=resumed_elapsed + (time.monotonic() - start_time),
                         device=device,
                         distributed_state=distributed_state,
+                        best_validation_loss=best_validation_loss,
+                        best_step=best_step,
                     )
                     step_checkpoint = Path(checkpoint_path).with_name(
                         f"{Path(checkpoint_path).stem}.step{step}{Path(checkpoint_path).suffix}"
@@ -664,18 +756,29 @@ def train(
                         scaler_state_dict=scaler.state_dict() if use_amp else None,
                         training_state={"step": step, "optimizer_steps": optimizer_steps},
                     )
+                    if improved:
+                        best_checkpoint = Path(checkpoint_path).with_name(
+                            f"{Path(checkpoint_path).stem}.best{Path(checkpoint_path).suffix}"
+                        )
+                        save_checkpoint(
+                            best_checkpoint,
+                            _unwrap_model(model),
+                            vocabulary_sha256=vocabulary.digest,
+                            training=training,
+                            optimizer_state_dict=optimizer.state_dict(),
+                            scheduler_state_dict=scheduler.state_dict(),
+                            scaler_state_dict=scaler.state_dict() if use_amp else None,
+                            training_state={"step": step, "optimizer_steps": optimizer_steps},
+                        )
+                if early_stopping_patience and stale_evaluations >= early_stopping_patience:
+                    stopped_early = True
+                    steps = step
+                    break
 
-        if distributed_state.enabled:
-            dist.barrier()
-        validation_metrics = _evaluate(
-            model,
-            validation_dataset,
-            batch_size=batch_size,
-            device=device,
-            use_amp=use_amp,
-            num_workers=num_workers,
-        ) if distributed_state.is_main else {"loss": 0.0, "perplexity": 0.0}
-        validation_metrics = _maybe_broadcast_metrics(validation_metrics, distributed_state)
+        train_eval_metrics, validation_metrics = compute_metrics()
+        if best_validation_loss is None or validation_metrics["loss"] < best_validation_loss:
+            best_validation_loss = validation_metrics["loss"]
+            best_step = steps
         training = _make_run_state(
             train_config=train_config,
             model_config=model_config,
@@ -687,10 +790,14 @@ def train(
             validation_size=validation_size,
             losses=losses,
             validation_metrics=validation_metrics,
+            train_eval_metrics=train_eval_metrics,
             parameter_count=_parameter_count(model),
             elapsed_seconds=resumed_elapsed + (time.monotonic() - start_time),
             device=device,
             distributed_state=distributed_state,
+            best_validation_loss=best_validation_loss,
+            best_step=best_step,
+            stopped_early=stopped_early,
         )
         if distributed_state.is_main:
             save_checkpoint(
@@ -703,6 +810,20 @@ def train(
                 scaler_state_dict=scaler.state_dict() if use_amp else None,
                 training_state={"step": steps, "optimizer_steps": optimizer_steps},
             )
+            if best_step == steps:
+                best_checkpoint = Path(checkpoint_path).with_name(
+                    f"{Path(checkpoint_path).stem}.best{Path(checkpoint_path).suffix}"
+                )
+                save_checkpoint(
+                    best_checkpoint,
+                    _unwrap_model(model),
+                    vocabulary_sha256=vocabulary.digest,
+                    training=training,
+                    optimizer_state_dict=optimizer.state_dict(),
+                    scheduler_state_dict=scheduler.state_dict(),
+                    scaler_state_dict=scaler.state_dict() if use_amp else None,
+                    training_state={"step": steps, "optimizer_steps": optimizer_steps},
+                )
         return training
     finally:
         cleanup_distributed(distributed_state)

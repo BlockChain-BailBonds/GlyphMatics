@@ -9,6 +9,8 @@ from pathlib import Path
 from typing import Any
 
 from .programming_syntax import (
+    EXECUTABLE_SYSTEMS,
+    PROGRAM_EXAMPLES,
     all_fixed_program_glyphs,
     iter_executable_system_rows,
     iter_program_training_rows,
@@ -18,6 +20,22 @@ from .semantic_codec import SemanticVocabulary, iter_glyphs, tokenize_lossless
 
 LANGUAGES = ("en", "zh-Hans", "es", "hi", "ar")
 SEMANTIC_MARKER = "⟪SEM⟫"
+
+PROGRAM_SUMMARY_TEMPLATES: dict[str, str] = {
+    "en": "{code_language} program for {intent}. Canonical glyphs {glyphs}.",
+    "zh-Hans": "{code_language} 程序用于{intent}。规范字形 {glyphs}。",
+    "es": "Programa de {code_language} para {intent}. Glifos canónicos {glyphs}.",
+    "hi": "{code_language} प्रोग्राम {intent} के लिए। मानक ग्लिफ {glyphs}।",
+    "ar": "برنامج {code_language} لغرض {intent}. الرموز المعيارية {glyphs}.",
+}
+
+SYSTEM_SUMMARY_TEMPLATES: dict[str, str] = {
+    "en": "{title}: {description} Expected output {stdout}.",
+    "zh-Hans": "{title}：{description} 预期输出 {stdout}。",
+    "es": "{title}: {description} Salida esperada {stdout}.",
+    "hi": "{title}: {description} अपेक्षित आउटपुट {stdout}।",
+    "ar": "{title}: {description} والمخرجات المتوقعة {stdout}.",
+}
 
 
 def language_token(language: str) -> str:
@@ -166,6 +184,38 @@ class SemanticCorpusBuilder:
                 weight=24,
                 metadata=metadata,
             )
+
+    def ingest_programming_semantics(self) -> None:
+        for example in PROGRAM_EXAMPLES:
+            intent = example.intent.replace("-", " ")
+            for code_language in sorted(example.sources):
+                for language, template in PROGRAM_SUMMARY_TEMPLATES.items():
+                    self.add_text(
+                        template.format(
+                            code_language=code_language,
+                            intent=intent,
+                            glyphs=example.canonical_glyphs,
+                        ),
+                        language=language,
+                        source="glyphmatics/programming_semantics",
+                        concepts=[f"PROGRAM.{example.intent}", f"LANGUAGE.{code_language}"],
+                        weight=6,
+                    )
+
+        for system in EXECUTABLE_SYSTEMS:
+            stdout = system.expected_stdout.rstrip("\n") or "∅"
+            for language, template in SYSTEM_SUMMARY_TEMPLATES.items():
+                self.add_text(
+                    template.format(
+                        title=system.title,
+                        description=system.description,
+                        stdout=stdout,
+                    ),
+                    language=language,
+                    source="glyphmatics/executable_semantics",
+                    concepts=[f"SYSTEM.{system.system_id}"],
+                    weight=8,
+                )
 
     def add_meaning(self, token: str, meaning: dict[str, Any], *, weight: int = 8) -> None:
         if not token:
@@ -368,7 +418,8 @@ def build_artifacts(
 ) -> dict[str, Any]:
     builder = SemanticCorpusBuilder()
     builder.ingest_maestro(Path(semantic_root))
-    builder.ingest_programming_syntax()
+    builder.ingest_programming_syntax(repeats=128)
+    builder.ingest_programming_semantics()
     vocabulary = builder.build_vocabulary(max_tokens=max_tokens, min_frequency=min_frequency)
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)

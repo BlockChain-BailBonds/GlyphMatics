@@ -151,6 +151,9 @@ def command_train(args: argparse.Namespace) -> int:
             compile_model=args.compile,
             seed=args.seed,
             num_workers=args.num_workers,
+            train_eval_fraction=args.train_eval_fraction,
+            early_stopping_patience=args.early_stopping_patience,
+            early_stopping_min_delta=args.early_stopping_min_delta,
         )
     )
     return 0
@@ -324,6 +327,9 @@ def parser() -> argparse.ArgumentParser:
     train_parser.add_argument("--resume")
     train_parser.add_argument("--checkpoint-every", type=int, default=0)
     train_parser.add_argument("--num-workers", type=int, default=0)
+    train_parser.add_argument("--train-eval-fraction", type=float, default=0.1)
+    train_parser.add_argument("--early-stopping-patience", type=int, default=0)
+    train_parser.add_argument("--early-stopping-min-delta", type=float, default=0.0)
     train_parser.add_argument("--compile", action="store_true")
     train_parser.set_defaults(func=command_train)
 
