@@ -239,6 +239,28 @@ class SemanticVocabulary:
                 output.append(self.id_to_token[token_index])
         return "".join(output)
 
+    def glyphs_for_model_ids(
+        self,
+        ids: Iterable[int],
+        *,
+        skip_special: bool = True,
+    ) -> str:
+        """Render model IDs directly without re-tokenizing structured tokens."""
+
+        output: list[str] = []
+        for raw_id in ids:
+            model_id = int(raw_id)
+            if model_id < SPECIAL_TOKEN_COUNT:
+                if skip_special:
+                    continue
+                output.append(self.token_for_model_id(model_id))
+                continue
+            token_index = model_id - SPECIAL_TOKEN_COUNT
+            if token_index >= len(self.records):
+                raise ValueError(f"model token ID is outside vocabulary: {model_id}")
+            output.append(self.records[token_index]["glyph"])
+        return "".join(output)
+
     def encode_glyphs(self, text: str) -> str:
         output: list[str] = []
         for token in tokenize_lossless(text):

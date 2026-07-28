@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GlyphMatics Compression Benchmark</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">GlyphMatics Compression Benchmark</p>
+          <h1>Measure semantic glyph compression and executable-system glyph coverage.</h1>
+          <p class="lede">
+            This page combines two generated benchmark surfaces from the current
+            repo state: the broader multilingual semantic codec vocabulary
+            (`v2`) and the newer executable-system glyph inventory (`v3`).
+          </p>
+        </div>
+        <div class="hero-aside" id="hero-summary">
+          <div class="summary-card loading">Loading benchmark metadata...</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Live semantic benchmark</p>
+            <h2>Run the browser-side codec</h2>
+          </div>
+          <p class="supporting">
+            The browser loads a Pages-local snapshot of the `semantic-programming-v2`
+            vocabulary and replays the same tokenization, visible glyph encoding,
+            and binary codec rules used by the Python implementation.
+          </p>
+        </div>
+
+        <div class="controls">
+          <label class="stack">
+            <span>Corpus sample</span>
+            <select id="sample-select"></select>
+          </label>
+          <button id="load-sample" class="button secondary" type="button">Load sample</button>
+          <button id="run-benchmark" class="button" type="button">Run benchmark</button>
+        </div>
+
+        <label class="stack">
+          <span>Input text</span>
+          <textarea id="input-text" rows="7" spellcheck="false"></textarea>
+        </label>
+
+        <div id="live-status" class="status">Loading vocabulary snapshot...</div>
+
+        <div class="metrics" id="live-metrics"></div>
+
+        <div class="preview-grid">
+          <article class="preview-card">
+            <h3>Visible glyph stream</h3>
+            <pre id="glyph-preview"></pre>
+          </article>
+          <article class="preview-card">
+            <h3>Binary preview</h3>
+            <pre id="binary-preview"></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Semantic samples</p>
+            <h2>Generated from the multilingual `v2` artifact</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Language</th>
+                <th>Sample</th>
+                <th>Known ratio</th>
+                <th>Visual ratio</th>
+                <th>Binary ratio</th>
+              </tr>
+            </thead>
+            <tbody id="semantic-samples-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Executable systems</p>
+            <h2>50 complete Python reference systems from `v3`</h2>
+          </div>
+          <label class="stack compact">
+            <span>Filter systems</span>
+            <input id="system-filter" type="search" placeholder="search by id or title" />
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Glyph</th>
+                <th>System</th>
+                <th>Source chars</th>
+                <th>Lossless glyph chars</th>
+                <th>System ratio</th>
+                <th>Binary ratio</th>
+              </tr>
+            </thead>
+            <tbody id="systems-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>

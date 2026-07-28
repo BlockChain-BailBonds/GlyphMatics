@@ -9,6 +9,12 @@ from pathlib import Path
 import sys
 
 from .glyph_container import pack_payload, unpack_payload
+from .programming_syntax import (
+    canonicalize_program,
+    decode_program_lossless,
+    encode_program_lossless,
+    normalize_language,
+)
 from .semantic_codec import SemanticVocabulary
 from .semantic_data import build_artifacts
 from .semantic_data import language_token
@@ -96,6 +102,27 @@ def command_unpack(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_code_encode(args: argparse.Namespace) -> int:
+    language = normalize_language(args.language)
+    exact = encode_program_lossless(args.source, language)
+    _json(
+        {
+            "language": language,
+            "lossless_glyphs": exact,
+            "canonical_glyphs": canonicalize_program(args.source, language),
+            "source_characters": len(args.source),
+            "lossless_glyph_characters": len(exact),
+            "lossless_roundtrip": decode_program_lossless(exact, language) == args.source,
+        }
+    )
+    return 0
+
+
+def command_code_decode(args: argparse.Namespace) -> int:
+    print(decode_program_lossless(args.glyphs, args.language))
+    return 0
+
+
 def command_train(args: argparse.Namespace) -> int:
     from .semantic_train import train
 
@@ -151,7 +178,7 @@ def command_generate(args: argparse.Namespace) -> int:
     _json(
         {
             "text": text,
-            "glyphs": vocabulary.encode_glyphs(text),
+            "glyphs": vocabulary.glyphs_for_model_ids(continuation),
             "model_ids": continuation,
             "checkpoint_training": payload.get("training", {}),
         }
@@ -205,6 +232,22 @@ def parser() -> argparse.ArgumentParser:
     unpack.add_argument("--input", required=True)
     unpack.add_argument("--output", required=True)
     unpack.set_defaults(func=command_unpack)
+
+    code_encode = commands.add_parser(
+        "code-encode",
+        help="encode exact syntax and show canonical semantic glyphs",
+    )
+    code_encode.add_argument("--language", required=True)
+    code_encode.add_argument("source")
+    code_encode.set_defaults(func=command_code_encode)
+
+    code_decode = commands.add_parser(
+        "code-decode",
+        help="decode an exact programming glyph stream",
+    )
+    code_decode.add_argument("--language")
+    code_decode.add_argument("glyphs")
+    code_decode.set_defaults(func=command_code_decode)
 
     train_parser = commands.add_parser("train", help="train the causal semantic glyph LM")
     train_parser.add_argument("--vocabulary", required=True)

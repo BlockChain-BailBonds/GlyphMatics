@@ -8,6 +8,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+from .programming_syntax import (
+    all_fixed_program_glyphs,
+    iter_executable_system_rows,
+    iter_program_training_rows,
+)
 from .semantic_codec import SemanticVocabulary, iter_glyphs, tokenize_lossless
 
 
@@ -38,6 +43,7 @@ class SemanticCorpusBuilder:
         self.counts: Counter[str] = Counter()
         self.meanings: dict[str, list[dict[str, Any]]] = defaultdict(list)
         self._meaning_keys: dict[str, set[str]] = defaultdict(set)
+        self.fixed_glyphs: dict[str, str] = {}
         self.corpus: list[dict[str, Any]] = []
         self.languages: set[str] = set()
 
@@ -80,6 +86,86 @@ class SemanticCorpusBuilder:
                 "concept_sequence": concept_list,
             }
         )
+
+    def add_token_sequence(
+        self,
+        tokens: Iterable[str],
+        *,
+        text: str,
+        language: str,
+        source: str,
+        weight: int = 1,
+        metadata: dict[str, Any] | None = None,
+    ) -> None:
+        sequence = [str(token) for token in tokens if str(token)]
+        if not sequence:
+            return
+        self.languages.add(language)
+        self.counts.update({token: weight for token in sequence})
+        self.counts[language_token(language)] += weight
+        self.corpus.append(
+            {
+                "text": text,
+                "language": language,
+                "source": source,
+                "tokens": sequence,
+                **(metadata or {}),
+            }
+        )
+
+    def add_fixed_glyph(
+        self,
+        token: str,
+        glyph: str,
+        meaning: dict[str, Any],
+        *,
+        weight: int = 100_000,
+    ) -> None:
+        if len(glyph) != 1:
+            raise ValueError(f"fixed glyph must be one code point: {glyph!r}")
+        existing = self.fixed_glyphs.get(token)
+        if existing is not None and existing != glyph:
+            raise ValueError(f"token {token!r} has conflicting fixed glyphs")
+        if glyph in self.fixed_glyphs.values() and existing != glyph:
+            raise ValueError(f"fixed glyph is already assigned: {glyph!r}")
+        self.fixed_glyphs[token] = glyph
+        self.counts[token] += weight
+        key = json.dumps(meaning, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        if key not in self._meaning_keys[token]:
+            self.meanings[token].append(meaning)
+            self._meaning_keys[token].add(key)
+
+    def ingest_programming_syntax(self, *, repeats: int = 64) -> None:
+        for token, glyph, meaning in all_fixed_program_glyphs():
+            self.add_fixed_glyph(token, glyph, meaning)
+        for row in iter_program_training_rows(repeats=repeats):
+            metadata = {
+                key: value
+                for key, value in row.items()
+                if key not in {"text", "language", "source", "tokens"}
+            }
+            self.add_token_sequence(
+                row["tokens"],
+                text=str(row["text"]),
+                language=str(row["language"]),
+                source=str(row["source"]),
+                weight=16,
+                metadata=metadata,
+            )
+        for row in iter_executable_system_rows(repeats=max(1, repeats // 2)):
+            metadata = {
+                key: value
+                for key, value in row.items()
+                if key not in {"text", "language", "source", "tokens"}
+            }
+            self.add_token_sequence(
+                row["tokens"],
+                text=str(row["text"]),
+                language=str(row["language"]),
+                source=str(row["source"]),
+                weight=24,
+                metadata=metadata,
+            )
 
     def add_meaning(self, token: str, meaning: dict[str, Any], *, weight: int = 8) -> None:
         if not token:
@@ -212,14 +298,18 @@ class SemanticCorpusBuilder:
         ]
         candidates.sort(key=lambda item: (-item[1], item[0]))
         candidates = candidates[:max_tokens]
-        glyph_source = iter_glyphs()
+        reserved_glyphs = set(self.fixed_glyphs.values())
+        glyph_source = (
+            glyph for glyph in iter_glyphs() if glyph not in reserved_glyphs
+        )
         records = []
         for token_id, (token, count) in enumerate(candidates):
+            glyph = self.fixed_glyphs.get(token)
             records.append(
                 {
                     "id": token_id,
                     "token": token,
-                    "glyph": next(glyph_source),
+                    "glyph": glyph if glyph is not None else next(glyph_source),
                     "frequency": count,
                     "languages": sorted(
                         {
@@ -249,7 +339,7 @@ class SemanticCorpusBuilder:
         unknown_count = 0
         with path.open("w", encoding="utf-8") as handle:
             for row in self.corpus:
-                tokens = tokenize_lossless(row["text"])
+                tokens = row.get("tokens") or tokenize_lossless(row["text"])
                 ids = [vocabulary.model_id(language_token(row["language"]))]
                 ids.extend(vocabulary.model_id(token) for token in tokens)
                 concepts = row.get("concept_sequence", [])
@@ -278,6 +368,7 @@ def build_artifacts(
 ) -> dict[str, Any]:
     builder = SemanticCorpusBuilder()
     builder.ingest_maestro(Path(semantic_root))
+    builder.ingest_programming_syntax()
     vocabulary = builder.build_vocabulary(max_tokens=max_tokens, min_frequency=min_frequency)
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)

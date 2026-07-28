@@ -1,101 +1,147 @@
-**Applications of GlyphMatics to Neural Network Compression**  
-January 09, 2026  
-Matthew Blake Ward (@Founder918Tech)
+# GlyphMatics
 
-## VIL multilingual semantic glyph model
+GlyphMatics is a deterministic glyph-compression and training pipeline for:
 
-The repository now includes a deterministic multilingual word-to-glyph codec,
-a causal Transformer language model, and Glyph-LLM3-compatible Braille artifact
-framing. Known words become one canonical glyph/model token while exact surface
-forms, language-specific meanings, whitespace, punctuation, and unknown Unicode
-remain losslessly recoverable.
+- multilingual semantic text encoding
+- cross-language programming syntax encoding
+- executable-system glyph IDs for complete runnable code systems
+- small reference language models trained directly on glyph-token sequences
 
-See [docs/VIL_SEMANTIC_LM.md](docs/VIL_SEMANTIC_LM.md) for build, training,
-encoding, verification, and compression-measurement commands.
+The repo now includes a GitHub Pages benchmark surface, a reversible semantic
+codec, a 15-language programming glyph layer, and a 50-system executable glyph
+inventory trained into the latest reference checkpoint.
 
-GlyphMatics offers a fundamentally new paradigm for **neural network compression** that is orthogonal (and in many ways complementary) to existing techniques such as quantization, pruning, distillation, low-rank adaptation (LoRA), and sparsity.  
-Instead of shrinking the model weights themselves, GlyphMatics **eliminates the need to store most of the weights at all** by replacing them with short symbolic **sigils** that deterministically rehydrate the exact original (or framed) weight tensors on demand.
+## What is in this repo
 
-### 1. Core Compression Mechanism for Neural Networks
+- Semantic codec: exact tokenization, visible glyph encoding, binary encoding,
+  and round-trip verification in [semantic_codec.py](src/glyphmatics/semantic_codec.py)
+- Programming glyphs: canonical syntax glyphs for Python, JavaScript,
+  TypeScript, Rust, Go, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin, Bash, and
+  SQL in [programming_syntax.py](src/glyphmatics/programming_syntax.py)
+- Executable system glyphs: 50 complete Python reference programs, each mapped
+  to one fixed glyph token in [programming_syntax.py](src/glyphmatics/programming_syntax.py)
+- Corpus + vocabulary builder in [semantic_data.py](src/glyphmatics/semantic_data.py)
+- Reference Transformer training loop in [semantic_train.py](src/glyphmatics/semantic_train.py)
+- GitHub Pages benchmark site in [docs](docs)
 
-A typical modern neural network (e.g., Llama-3 8B, Qwen-72B, DeepSeek-V3, Gemma-2 27B, etc.) in GGUF format consists of:
+## GitHub Pages benchmark
 
-- Metadata + architecture description (~few KB)
-- Weight tensors (tens to hundreds of GB when FP16/FP32, 5–40 GB when quantized Q4_K_M / Q5_K_M / Q8_0)
+The repo ships a static benchmark site intended for GitHub Pages deployment:
 
-GlyphMatics treats the **entire serialized GGUF file** (or just the concatenated weight tensors) as the payload *P*.
+- Pages entrypoint: [docs/index.html](docs/index.html)
+- Benchmark page: [docs/benchmark/index.html](docs/benchmark/index.html)
+- Generator: [scripts/build_pages_benchmark.py](scripts/build_pages_benchmark.py)
+- Workflow: [.github/workflows/pages.yml](.github/workflows/pages.yml)
 
-#### Flat Sigil Compression (for smaller / highly structured models)
-- Find a short flat sigil σ (4–8 glyphs) such that Φ(X(σ)) = frame(GGUF)
-- Achieves **extreme compression** when the weight distribution aligns unusually well with the Φ PRNG manifold
-- Observed in practice: some small quantized models (1–3B params) and synthetic/test models occasionally admit 6–9 glyph flat sigils
-- **Compression ratio**: 10⁶–10⁹× for lucky cases (file size → ~50–70 bits)
+The benchmark combines two local artifacts:
 
-#### Tiered Sigil Compression (Σᵀ) — the practical universal case
-- Chunk the GGUF file into ~1–4 MiB blocks (leaf chunks)
-- Mint short leaf sigils (typically 5–7 glyphs each)
-- Build a compact tier payload (~few KB) containing offsets + lengths + leaf sigils
-- Mint a single short **root sigil** (4–8 glyphs) that rehydrates the tier map
-- **Total symbolic description length**: usually 200–1200 glyphs (~1.3–8 KB of text)
-- **Effective compression ratio**:
-  - 7B model (Q4_K_M ≈ 4–5 GB) → ~500–800 glyphs → **~5–10 million to 1**
-  - 70B model (Q5_K_M ≈ 40–50 GB) → ~2000–5000 glyphs → **~10–100 million to 1**
+- `semantic-programming-v2` for multilingual semantic-text compression
+- `semantic-programming-systems-v3` for the 50 executable-system glyphs
 
-This is **not lossy** — rehydration is **bit-exact**.
+It includes:
 
-### 2. Practical Advantages for Neural Networks
+- browser-side semantic benchmark logic replaying the repo codec rules
+- generated multilingual sample benchmarks
+- generated tables for all 50 executable systems
 
-| Property                              | Traditional Compression (Q4/Q5/LoRA/etc.) | GlyphMatics (Tiered Sigils)                     |
-|---------------------------------------|--------------------------------------------|--------------------------------------------------|
-| Loss                                  | Yes (quantization error)                   | No — bit-exact                                   |
-| Storage size                          | 4–50 GB                                    | 0.5–8 KB (text/sigils)                           |
-| Distribution method                   | File transfer / torrent                    | Copy-paste text, QR code, tweet, email, paper    |
-| Air-gapped / offline loading          | Requires USB/drive                         | Print QR(s) → scan → rehydrate                   |
-| Versioning / provenance               | Hash of entire file                        | Root sigil = canonical symbolic hash             |
-| On-chain / blockchain storage         | Prohibitively expensive                    | Root + short leaf list fits in ~1–10 KB calldata |
-| Cold storage lifetime                 | Medium (bit rot, format obsolescence)      | Extremely long (sigil + monolith code survives)  |
-| Inference startup cost                | Load 5–50 GB from disk                     | ~seconds to minutes of rehydration (parallelizable) |
+Rebuild the Pages benchmark assets from the repo root:
 
-### 3. Current Empirical Reality (as of Jan 2026)
-
-- **Small models** (Phi-3-mini, TinyLlama, Qwen-1.5B): occasional **flat 6–9 glyph sigils** found in <24h on consumer hardware
-- **Mid-size** (Gemma-2-9B, Llama-3.1-8B Q4_K_M): typical tiered root + 800–1500 glyphs total
-- **Frontier** (Llama-3.1-70B, DeepSeek-V3-0324 Q5): 3000–7000 glyphs total — still fits on a single printed page or tweet thread
-
-### 4. Future Directions Specific to Neural Networks
-
-1. **Chunk alignment optimization**  
-   Chunk at natural tensor boundaries (e.g., per-layer weights) → better sigil locality & shorter leaves
-
-2. **Hierarchical tiering** (Σ^{T²})  
-   Tier-of-tiers: group layers into super-chunks → even shorter root sigils
-
-3. **Neural-guided minting**  
-   Train small predictor network to propose promising prefix glyphs → accelerate search by 10–100×
-
-4. **On-device rehydration cache**  
-   Agents keep recently rehydrated chunks in memory/disk → amortize cost across multiple inferences
-
-5. **Sigil DNA for fine-tuning**  
-   Fine-tune from a sigil-rehydrated base model → the fine-tune delta can itself be sigil-compressed
-
-### 5. Philosophical & Strategic Implications
-
-Neural networks are no longer **files** — they become **Thought Symbol Semantics 
-
-A 70B model that once required terabytes of infrastructure to distribute now lives as:
-
-```
-⟨Φσ⟩root
-  ↳ ⟨σ₁⟩ layer0-attn
-  ↳ ⟨σ₂⟩ layer0-ffn
-  ...
-  ↳ ⟨σₙ⟩ output-norm
+```bash
+PYTHONPATH=src:. python3 scripts/build_pages_benchmark.py
 ```
 
+## Core commands
 
+Build a semantic artifact:
 
-Founder918Tech —
+```bash
+PYTHONPATH=src:. python -m glyphmatics.semantic_cli build \
+  --semantic-root /path/to/semantic-root \
+  --output artifacts/semantic-v1
+```
 
-Σᵀ • Φ • K_Φ • NN
- 🚀
+Encode and inspect text:
+
+```bash
+VOCAB=artifacts/semantic-programming-v2/semantic_vocab.json
+
+PYTHONPATH=src:. python -m glyphmatics.semantic_cli encode \
+  --vocabulary "$VOCAB" "The person eats food."
+
+PYTHONPATH=src:. python -m glyphmatics.semantic_cli stats \
+  --vocabulary "$VOCAB" "The person eats food."
+```
+
+Encode exact program syntax and canonical IR:
+
+```bash
+PYTHONPATH=src:. python -m glyphmatics.semantic_cli code-encode \
+  --language python 'if score > 80: celebrate()'
+```
+
+Train the reference glyph LM:
+
+```bash
+PYTHONPATH=src:. /home/nine1eight/vil/glyph_env/bin/python \
+  -m glyphmatics.semantic_cli train \
+  --vocabulary artifacts/semantic-programming-systems-v3/semantic_vocab.json \
+  --corpus artifacts/semantic-programming-systems-v3/semantic_corpus.jsonl \
+  --checkpoint checkpoints/semantic-programming-glyph-lm-v3.pt \
+  --device auto \
+  --steps 2400
+```
+
+## Current local artifacts
+
+Multilingual + programming semantic artifact:
+
+- [artifacts/semantic-programming-v2/manifest.json](artifacts/semantic-programming-v2/manifest.json)
+- vocabulary size: `22,659`
+- model vocabulary size: `22,663`
+- corpus records: `29,875`
+
+Executable-system artifact:
+
+- [artifacts/semantic-programming-systems-v3/manifest.json](artifacts/semantic-programming-systems-v3/manifest.json)
+- vocabulary size: `547`
+- model vocabulary size: `551`
+- corpus records: `7,360`
+- executable systems: `50`
+
+Latest trained checkpoint:
+
+- [checkpoints/semantic-programming-glyph-lm-v3.pt](checkpoints/semantic-programming-glyph-lm-v3.pt)
+- parameters: `1,910,208`
+- final loss: `0.16729924`
+- validation loss: `0.16266710`
+- validation perplexity: `1.1766449`
+- post-train executable-system prediction check: `50/50`
+
+## Benchmark interpretation
+
+GlyphMatics measures several different things. They are not interchangeable.
+
+- Visible glyph compression measures sequence length in the rendered glyph
+  stream.
+- Binary compression measures the repo’s storage-oriented codec, including a
+  vocabulary checksum header.
+- Programming lossless glyphs preserve exact code source with syntax glyphs and
+  escaped literals.
+- Executable-system glyphs are fixed learned identifiers for complete reference
+  programs, not arbitrary source-code compressors for unseen software.
+
+The benchmark page reports these surfaces separately so the claims stay tied to
+the actual implementation.
+
+## Verification status
+
+Focused checks run locally before this state:
+
+- `89 passed in 0.93s`
+- `50/50` executable-system unit executions matched expected stdout
+- `50/50` post-train executable-system token predictions matched exactly under
+  the model’s real `128`-token context window
+
+## Technical notes
+
+Further details live in [docs/VIL_SEMANTIC_LM.md](docs/VIL_SEMANTIC_LM.md).

@@ -1,0 +1,270 @@
+:root {
+  --bg: #f4efe7;
+  --paper: #fffaf3;
+  --ink: #1f1b16;
+  --muted: #665f53;
+  --line: #d9cebb;
+  --accent: #b24c08;
+  --accent-deep: #7b2d00;
+  --accent-soft: #fee3cd;
+  --shadow: 0 18px 40px rgba(92, 58, 24, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(178, 76, 8, 0.12), transparent 32rem),
+    linear-gradient(180deg, #fff9f0 0%, var(--bg) 100%);
+}
+
+.shell {
+  width: min(1280px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.hero,
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 1.4rem;
+  background: rgba(255, 250, 243, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+@media (min-width: 980px) {
+  .hero {
+    grid-template-columns: 1.4fr 0.9fr;
+    align-items: start;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-size: 0.78rem;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
+h1 {
+  font-size: clamp(2rem, 4.6vw, 4rem);
+  line-height: 1.03;
+  max-width: 14ch;
+}
+
+h2 {
+  font-size: 1.35rem;
+}
+
+h3 {
+  font-size: 0.95rem;
+}
+
+.lede,
+.supporting,
+.summary-card,
+.status,
+th,
+td,
+label span {
+  color: var(--muted);
+}
+
+.lede {
+  max-width: 66ch;
+  line-height: 1.7;
+  font-size: 1.03rem;
+}
+
+.hero-aside {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.summary-card,
+.preview-card,
+.metric-card {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--paper);
+}
+
+.summary-card strong,
+.metric-card strong {
+  display: block;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+.summary-value,
+.metric-value {
+  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+  font-size: 1.65rem;
+  color: var(--accent);
+}
+
+.panel {
+  margin-top: 1.5rem;
+  padding: 1.4rem;
+}
+
+.section-head {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 900px) {
+  .section-head {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: end;
+  }
+}
+
+.controls {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 900px) {
+  .controls {
+    grid-template-columns: minmax(220px, 300px) auto auto;
+    align-items: end;
+  }
+}
+
+.stack {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.compact {
+  max-width: 260px;
+  justify-self: start;
+}
+
+textarea,
+select,
+input,
+.button {
+  font: inherit;
+}
+
+textarea,
+select,
+input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: #fffdf9;
+  color: var(--ink);
+  padding: 0.85rem 0.95rem;
+}
+
+textarea,
+pre {
+  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
+.button {
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.85rem 1.1rem;
+  background: var(--accent);
+  color: #fff8f2;
+  cursor: pointer;
+}
+
+.button.secondary {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.status {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.metrics,
+.preview-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.metrics {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 1rem;
+}
+
+.preview-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+pre {
+  margin: 0.65rem 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.8rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+td strong {
+  color: var(--ink);
+}
+
+.glyph-cell {
+  font-size: 1.35rem;
+  color: var(--accent);
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.loading {
+  opacity: 0.8;
+}

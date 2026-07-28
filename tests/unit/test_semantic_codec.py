@@ -51,6 +51,14 @@ def test_known_word_is_exactly_one_glyph():
     assert codec.encode_glyphs("Hello") == codec.token_to_glyph["Hello"]
 
 
+def test_model_ids_render_directly_to_glyphs():
+    codec = vocabulary()
+    ids = [codec.model_id("Hello"), codec.model_id(" "), codec.model_id("world")]
+    assert codec.glyphs_for_model_ids(ids) == "".join(
+        codec.token_to_glyph[token] for token in ("Hello", " ", "world")
+    )
+
+
 def test_multilingual_semantics_are_retained():
     codec = vocabulary()
     assert codec.semantics("水", language="zh-Hans")[0]["concept_id"] == "WATER"

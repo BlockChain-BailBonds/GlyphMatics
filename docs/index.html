@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GlyphMatics Pages</title>
+    <style>
+      :root {
+        --bg: #f6f1e8;
+        --panel: #fffaf2;
+        --ink: #1d1a15;
+        --muted: #665f53;
+        --line: #d7ccb9;
+        --accent: #b34d00;
+        --accent-soft: #ffe1c7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(179, 77, 0, 0.12), transparent 28rem),
+          linear-gradient(180deg, #fff8ef 0%, var(--bg) 100%);
+      }
+
+      main {
+        width: min(1100px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 3rem 0 4rem;
+      }
+
+      .hero {
+        display: grid;
+        gap: 1.5rem;
+        padding: 2rem;
+        border: 1px solid var(--line);
+        border-radius: 1.5rem;
+        background: rgba(255, 250, 242, 0.9);
+        backdrop-filter: blur(8px);
+      }
+
+      .eyebrow {
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: var(--accent);
+        margin: 0;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+        font-size: clamp(2rem, 5vw, 4rem);
+        line-height: 1.02;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.65;
+      }
+
+      .actions,
+      .grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .actions {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      a.card,
+      .metric {
+        display: block;
+        padding: 1.15rem 1.2rem;
+        border-radius: 1rem;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        text-decoration: none;
+        color: inherit;
+      }
+
+      a.card:hover {
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+
+      a.card strong,
+      .metric strong {
+        display: block;
+        font-size: 1rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .grid {
+        margin-top: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .metric-value {
+        font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+        font-size: 2rem;
+        color: var(--accent);
+      }
+
+      .section {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        border: 1px solid var(--line);
+        border-radius: 1.25rem;
+        background: var(--panel);
+      }
+
+      code {
+        font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+        font-size: 0.92em;
+        background: rgba(179, 77, 0, 0.08);
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">GlyphMatics / VIL / GitHub Pages</p>
+        <h1>Compression benchmark and glyph-model artifacts.</h1>
+        <p>
+          This site publishes the current GlyphMatics benchmark surface: the
+          multilingual semantic glyph codec, the 15-language programming glyph
+          layer, and the 50 executable-system glyph inventory trained into the
+          latest reference checkpoint.
+        </p>
+        <div class="actions">
+          <a class="card" href="./benchmark/">
+            <strong>Open the benchmark</strong>
+            Live semantic codec measurements plus generated executable-system
+            benchmark tables.
+          </a>
+          <a class="card" href="https://github.com/BlockChain-BailBonds/GlyphMatics">
+            <strong>Repository</strong>
+            Source code, training pipeline, Pages workflow, and generated assets.
+          </a>
+          <a class="card" href="https://github.com/BlockChain-BailBonds/GlyphMatics/blob/main/docs/VIL_SEMANTIC_LM.md">
+            <strong>Technical notes</strong>
+            Build, train, encode, decode, and artifact transport details.
+          </a>
+        </div>
+      </section>
+
+      <section class="grid" id="summary-grid">
+        <div class="metric">
+          <strong>Loading summary</strong>
+          <div class="metric-value">...</div>
+          <p>Fetching generated benchmark metadata.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <strong>Pages entrypoint</strong>
+        <p>
+          The benchmark page lives at <code>/benchmark/</code> and is deployed
+          from the repository <code>docs/</code> directory by GitHub Actions.
+        </p>
+      </section>
+    </main>
+    <script>
+      async function loadSummary() {
+        const response = await fetch("./benchmark/assets/benchmark-data.json");
+        const data = await response.json();
+        const summary = data.summary;
+        const metrics = [
+          ["Semantic samples", String(summary.semantic_sample_count)],
+          ["Executable systems", String(summary.executable_system_count)],
+          ["Mean semantic binary ratio", String(summary.mean_semantic_binary_ratio)],
+          ["Mean lossless code ratio", String(summary.mean_lossless_program_char_ratio)],
+        ];
+        const grid = document.getElementById("summary-grid");
+        grid.innerHTML = metrics
+          .map(
+            ([label, value]) => `
+              <div class="metric">
+                <strong>${label}</strong>
+                <div class="metric-value">${value}</div>
+              </div>
+            `,
+          )
+          .join("");
+      }
+      loadSummary().catch((error) => {
+        document.getElementById("summary-grid").innerHTML = `
+          <div class="metric">
+            <strong>Summary unavailable</strong>
+            <div class="metric-value">error</div>
+            <p>${String(error)}</p>
+          </div>
+        `;
+      });
+    </script>
+  </body>
+</html>

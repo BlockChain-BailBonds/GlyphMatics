@@ -4,6 +4,13 @@ This implementation turns multilingual surface text into a deterministic
 semantic glyph stream and trains a causal Transformer directly on those glyph
 IDs.
 
+The repo also now includes:
+
+- a GitHub Pages benchmark site under `docs/`
+- a generated Pages benchmark asset builder at `scripts/build_pages_benchmark.py`
+- a 50-system executable glyph layer built on top of the programming syntax
+  corpus
+
 ## Contracts
 
 There are three deliberately separate representations:
@@ -40,6 +47,53 @@ concept and sense metadata connect forms across languages.
 Training rows prepend a language-control glyph and append canonical concept
 glyphs after a semantic boundary glyph. The causal model therefore learns both
 surface continuation and sentence-to-concept structure.
+
+The build also adds aligned syntax examples for Python, JavaScript, TypeScript,
+Rust, Go, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin, Bash, and SQL. Stable
+one-character glyphs represent language tags, operators, control flow, types,
+declarations, functions, literals, and structural delimiters. The same
+canonical IR glyph has the same meaning across all supported languages.
+
+## Programming syntax glyphs
+
+Exact source recovery and semantic normalization are separate:
+
+```bash
+PYTHONPATH=src:. python -m glyphmatics.semantic_cli code-encode \
+  --language python 'if score > 80: celebrate()'
+```
+
+`lossless_glyphs` converts unambiguous syntax to one-character glyphs and
+Braille-escapes identifiers, literals, layout, and ambiguous aliases. It
+round-trips exactly. `canonical_glyphs` normalizes identifiers and literals to
+semantic classes for cross-language training; it intentionally does not retain
+surface spelling.
+
+The fixed inventory is defined in
+`src/glyphmatics/programming_syntax.py`. Examples include `≔` (assignment),
+`◇` (conditional), `↻` (for loop), `ƒ` (function), `↩` (return), `ι`
+(identifier), `№` (number), and `§` (string).
+
+The same module also defines 50 complete Python reference systems. Each one has
+its own fixed executable-system glyph token and expected stdout contract for
+testing and benchmark generation.
+
+## GitHub Pages benchmark
+
+Generate the static benchmark assets consumed by `docs/benchmark/index.html`:
+
+```bash
+PYTHONPATH=src:. python3 scripts/build_pages_benchmark.py
+```
+
+The benchmark combines:
+
+- `artifacts/semantic-programming-v2` for multilingual semantic text
+- `artifacts/semantic-programming-systems-v3` for executable-system glyphs
+
+The page reports semantic visible-glyph ratios, binary ratios, lossless
+programming glyph ratios, and the fixed one-glyph executable-system IDs as
+separate benchmark surfaces.
 
 ## Encode, decode, and inspect meaning
 
