@@ -1,0 +1,53 @@
+[
+  {
+    "case_id": "wa-cat-001",
+    "word": "cat",
+    "expected_tokens": ["BEGIN", "OBJECT", "COMPONENT", "SYMMETRY", "CONTAIN", "END"]
+  },
+  {
+    "case_id": "wa-umbrella-002",
+    "word": "umbrella",
+    "expected_tokens": ["BEGIN", "OBJECT", "COMPONENT", "CENTER", "CONTAIN", "BLOCK", "END"]
+  },
+  {
+    "case_id": "wa-bicycle-003",
+    "word": "bicycle",
+    "expected_tokens": ["BEGIN", "OBJECT", "COMPONENT", "CONNECTED", "MOTION", "SYMMETRY", "END"]
+  },
+  {
+    "case_id": "wa-clock-004",
+    "word": "clock",
+    "expected_tokens": ["BEGIN", "OBJECT", "CENTER", "LINE", "ROTATE", "POSITION", "END"]
+  },
+  {
+    "case_id": "wa-bridge-005",
+    "word": "bridge",
+    "expected_tokens": ["BEGIN", "OBJECT", "PATH", "CONNECTED", "BOUNDARY", "REACHABLE", "END"]
+  },
+  {
+    "case_id": "wa-fish-006",
+    "word": "fish",
+    "expected_tokens": ["BEGIN", "OBJECT", "COMPONENT", "MOTION", "LINE", "CONNECTED", "END"]
+  },
+  {
+    "case_id": "wa-tree-007",
+    "word": "tree",
+    "expected_tokens": ["BEGIN", "OBJECT", "COMPONENT", "CONNECTED", "SCALE", "SYMMETRY", "END"]
+  },
+  {
+    "case_id": "wa-snowflake-008",
+    "word": "snowflake",
+    "expected_tokens": ["BEGIN", "OBJECT", "CENTER", "SYMMETRY", "ROTATE", "LINE", "END"]
+  },
+  {
+    "case_id": "wa-airplane-009",
+    "word": "airplane",
+    "expected_tokens": ["BEGIN", "OBJECT", "COMPONENT", "SYMMETRY", "MOTION", "CONNECTED", "END"]
+  },
+  {
+    "case_id": "wa-key-010",
+    "word": "key",
+    "expected_tokens": ["BEGIN", "OBJECT", "COMPONENT", "CONNECTED", "OPEN", "LINE", "END"]
+  }
+]
+

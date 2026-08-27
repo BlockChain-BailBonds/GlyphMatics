@@ -1,0 +1,30 @@
+{
+  "artifact": "glyphmatics-wordart-333-v1.0.0",
+  "canon": {
+    "count": 333,
+    "digest_sha256": "226d7b9138d83036f8be19d0101ed23ec795b2d53c010c2bb4dc1a66a35d26ec",
+    "full_id_round_trip": "passed"
+  },
+  "checks": {
+    "compileall": "passed",
+    "dependency_free_selftest": "passed",
+    "notebook_bootstrap": "passed",
+    "release_zip_crc": "passed",
+    "standalone_kaggle_contract_stub": "passed",
+    "unittest": {
+      "failed": 0,
+      "passed": 9
+    }
+  },
+  "deterministic_fixture": {
+    "case_count": 10,
+    "first_attempt_correct": 10,
+    "max_word_art_points": 20.0,
+    "mean_composite": 98.627636,
+    "total_word_art_points": 20.0
+  },
+  "live_kaggle_model_run": false,
+  "note": "The deterministic fixture validates the execution contract and is not a claimed model leaderboard score.",
+  "schema": "glyphmatics.wordart.validation.v1"
+}
+
