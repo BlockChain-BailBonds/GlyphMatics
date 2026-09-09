@@ -1,0 +1,23 @@
+{
+  "architecture": "Software Twin -> KSIG activation -> glyph path planning -> action-effect ranking -> enforced action -> prediction validation -> runtime edge learning",
+  "dummy_submission_logic": false,
+  "hashes": {
+    "The_Solution_V2.ipynb": "a7e9a054ebedfbad9e999d4bc8f37ded54d42cc023ca1c79fcf5a052cbb64398",
+    "agent.py": "fe6197b3412b835581beca3813bcba1e4e952bb6dbc541a84b61fa8093550077",
+    "public25.ksig.json": "ee4cdad370bff13680e70b7888eddb697242481a9697a053b1e71e6741b35af2",
+    "public25.ksig.png": "4408122314f20b10393d080082ec6e02d8e9ab2a1d99fa90f526c13a9e77a11e",
+    "test_v2_smoke.py": "b640050398a75c7a5fd409d0f2bfcac616298841bebc3c78957aff1d69420f5a",
+    "the_solution_v2_agent.py": "fe6197b3412b835581beca3813bcba1e4e952bb6dbc541a84b61fa8093550077",
+    "top_public_4_03.ksig.json": "1a9d283d04f65299ed2487c68e15bd99d917fcf5a42d3ed2770f6cdacce5c1c5",
+    "top_public_4_03.ksig.png": "568488ccb43d46f3dd8ebc8c40a8bf3b68f784de1e2c4651e59585d9f705832d",
+    "top_public_4_33.ksig.json": "3acde6e880d10d5968531e0f3542ac6bcdff72cf2283e2ecc258f6da50d5f493",
+    "top_public_4_33.ksig.png": "afbfee2f4dde038753ceff0c59d42e0de7d3125a8cda5ebed4c46597523c4929"
+  },
+  "name": "The Solution V2",
+  "no_game_id_route_lookup": true,
+  "public25_graph_sha256": "77b9228681b339e9e78094b04510ffb069f8648e0425e540243c55852e3e36c8",
+  "qwen_role": "semantic analyst and mandatory-action tool executor; not action planner",
+  "reasoning_authority": "Meta-Sigil Planner",
+  "runtime_plan_sigils": true,
+  "sigils": ["PUBLIC25", "TOP_PUBLIC_4_33", "TOP_PUBLIC_4_03"]
+}
