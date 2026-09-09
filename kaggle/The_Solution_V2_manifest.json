@@ -3,6 +3,7 @@
   "dummy_submission_logic": false,
   "hashes": {
     "The_Solution_V2.ipynb": "a7e9a054ebedfbad9e999d4bc8f37ded54d42cc023ca1c79fcf5a052cbb64398",
+    "The_Solution_V2_COMPLETE_SCORED_RUN.ipynb": "595d3f398852343571b29d715bf535e9d1afd48d06891692dfd98d0b12a1e5aa",
     "agent.py": "fe6197b3412b835581beca3813bcba1e4e952bb6dbc541a84b61fa8093550077",
     "public25.ksig.json": "ee4cdad370bff13680e70b7888eddb697242481a9697a053b1e71e6741b35af2",
     "public25.ksig.png": "4408122314f20b10393d080082ec6e02d8e9ab2a1d99fa90f526c13a9e77a11e",
@@ -19,5 +20,19 @@
   "qwen_role": "semantic analyst and mandatory-action tool executor; not action planner",
   "reasoning_authority": "Meta-Sigil Planner",
   "runtime_plan_sigils": true,
+  "scored_run": {
+    "agent_output": "/kaggle/working/agent.py",
+    "competition_rerun_submission": "gateway-generated /kaggle/working/submission.parquet only",
+    "phase_a_submission": "actual public environment interactions; no dummy rows",
+    "submission_output": "/kaggle/working/submission.parquet",
+    "required_inputs": [
+      "competition: arc-prize-2026-arc-agi-3",
+      "dataset: jeroencottaar/taaf-kaggle-source-share",
+      "dataset: driessmit1/arc3-vllm-h100-wheelhouse-v3",
+      "model: foysalemonshanto/qwen3-8-27b-fp8-repacked-v1/pytorch/hf-fp8/1"
+    ],
+    "internet": false,
+    "gpu": "nvidiaRtxPro6000"
+  },
   "sigils": ["PUBLIC25", "TOP_PUBLIC_4_33", "TOP_PUBLIC_4_03"]
 }
