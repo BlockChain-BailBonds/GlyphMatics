@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "glyphmatics"
+version = "0.1.0"
+description = "Unified tensor engine: Quantum-Gravity-ARC-Defense-Policy-Quasicrystal"
+authors = [{name = "xxNine1Eightxx"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
+dev = ["black", "ruff"]
+llm = ["torch>=2.2"]
+
+[project.scripts]
+glyphmatics-semantic = "glyphmatics.semantic_cli:main"
+
+[tool.setuptools]
+packages = ["glyphmatics", "glyphmatics.core", "glyphmatics.visualization", "engine"]
+
+[tool.setuptools.package-dir]
+glyphmatics = "src/glyphmatics"
+"glyphmatics.core" = "src/glyphmatics/core"
+"glyphmatics.visualization" = "src/glyphmatics/visualization"
+engine = "engine"
