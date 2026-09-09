@@ -46,12 +46,12 @@ class GlyphMaticsEngine:
 
     def run_universe(self) -> Dict[str, object]:
         link, dE = quantum_gravity_bridge(Ψ_quant, G_μν)
-        gamma = gravity_arc_bridge(G_μν, Γ_arc)
-        theta_s = arc_defense_bridge(Γ_arc, Θ_def)
-        pi_u = defense_policy_bridge(theta_s, Π_meta, R=gamma, eta=0.05)
-        dpsi_dt = policy_quantum_bridge(pi_u, Ψ_quant)
-        phi_r = quasicrystal_universal(Φ_qc)
-        score = unification_score(Ψ_quant, G_μν, Γ_arc, Θ_def, pi_u, phi_r)
+        γ = gravity_arc_bridge(G_μν, Γ_arc)
+        Θs = arc_defense_bridge(Γ_arc, Θ_def)
+        Πu = defense_policy_bridge(Θs, Π_meta, R=γ, η=0.05)
+        dΨdt = policy_quantum_bridge(Πu, Ψ_quant)
+        Φr = quasicrystal_universal(Φ_qc)
+        U = unification_score(Ψ_quant, G_μν, Γ_arc, Θ_def, Πu, Φr)
 
         demo_in = np.array([[1, 1, 0], [0, 0, 0], [0, 0, 0]], dtype=np.uint8)
         demo_out = np.array([[2, 2, 0], [0, 0, 0], [0, 0, 0]], dtype=np.uint8)
@@ -59,10 +59,10 @@ class GlyphMaticsEngine:
 
         return {
             "ΔE_qg": round(dE, 6),
-            "Γ_arc_flow": round(gamma, 6),
-            "Π_trace": round(float(np.trace(pi_u)), 6),
-            "dΨ_dt_shape": tuple(dpsi_dt.shape),
-            "U_score": round(score, 6),
+            "Γ_arc_flow": round(γ, 6),
+            "Π_trace": round(float(np.trace(Πu)), 6),
+            "dΨ_dt_shape": tuple(dΨdt.shape),
+            "U_score": round(U, 6),
             "arc_demo_ok": bool(np.array_equal(demo_pred, demo_out)),
         }
 
