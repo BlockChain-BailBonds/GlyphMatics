@@ -20,5 +20,11 @@ llm = ["torch>=2.2"]
 [project.scripts]
 glyphmatics-semantic = "glyphmatics.semantic_cli:main"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["glyphmatics", "glyphmatics.core", "glyphmatics.visualization", "engine"]
+
+[tool.setuptools.package-dir]
+glyphmatics = "src/glyphmatics"
+"glyphmatics.core" = "src/glyphmatics/core"
+"glyphmatics.visualization" = "src/glyphmatics/visualization"
+engine = "engine"
