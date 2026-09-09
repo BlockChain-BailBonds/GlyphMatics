@@ -1,0 +1,9 @@
+{
+  "agent": "the_solution_v1_agent.py",
+  "current_public_code_ranking_reference": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/code?competitionId=133468&excludeNonAccessedDatasources=true&sortBy=scoreDescending",
+  "note": "Top-public profile sigils encode publicly inspectable metadata + public Duck/TAAF lineage only; no inaccessible/private cells inferred.",
+  "notebook": "The_Solution_V1.ipynb",
+  "public25_graph_sha256": "77b9228681b339e9e78094b04510ffb069f8648e0425e540243c55852e3e36c8",
+  "top_public_4_03_graph_sha256": "299d6223b089dee9e4efeab3d483a235047a2b9d5e0573a960589c1fed792607",
+  "top_public_4_33_graph_sha256": "0c02606211508d32ce459da1cb1890ea1db5d74e375b247385dddb8304cf6d19"
+}
