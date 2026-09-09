@@ -1,3 +1,4 @@
+# Compatibility mirror. Python packaging tools use lowercase pyproject.toml.
 [build-system]
 requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -13,12 +14,18 @@ requires-python = ">=3.9"
 dependencies = ["numpy>=1.24"]
 
 [project.optional-dependencies]
-test = ["pytest", "pytest-cov"]
+test = ["pytest", "pytest-cov", "Pillow>=10"]
 dev = ["black", "ruff"]
 llm = ["torch>=2.2"]
 
 [project.scripts]
 glyphmatics-semantic = "glyphmatics.semantic_cli:main"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["glyphmatics", "glyphmatics.core", "glyphmatics.visualization", "engine"]
+
+[tool.setuptools.package-dir]
+glyphmatics = "src/glyphmatics"
+"glyphmatics.core" = "src/glyphmatics/core"
+"glyphmatics.visualization" = "src/glyphmatics/visualization"
+engine = "engine"
