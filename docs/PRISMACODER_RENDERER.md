@@ -34,6 +34,41 @@ Serve a separately acquired PrismaCoder model on an operator-controlled OpenAI-c
 
 For authenticated endpoints, set PRISMACODER_API_KEY. Do not send private canonical records to an untrusted endpoint.
 
+## Opt-in live SVG contract gate
+
+Repository CI and the default \`pytest\` run remain network-free: the integration
+test skips unless \`PRISMACODER_LIVE_TEST=1\` is explicitly set. With an
+operator-controlled deployed PrismaCoder service available, run from the
+repository root:
+
+```sh
+export PRISMACODER_LIVE_TEST=1
+export PRISMACODER_ENDPOINT=http://127.0.0.1:8000/v1/chat/completions
+export PRISMACODER_MODEL=PrismaCoder-9B
+# Set PRISMACODER_API_KEY as well if the endpoint requires authentication.
+PYTHONPATH=src python -m pytest -q -s tests/integration/test_prismacoder_live_contract.py
+```
+
+The test uses the committed 480×320 example through the actual HTTP endpoint,
+never a mock generator, and disables fallback. It must reject malformed or
+unsafe SVG and require matching canonical input/SVG SHA-256 hashes with
+\`source=prismacoder\` and no fallback reason. A missing endpoint or model
+setting fails when the test is explicitly enabled; without opt-in it skips.
+
+To retain SVG and provenance files from a separate fail-closed endpoint run:
+
+```sh
+PYTHONPATH=src python -m glyphmatics.visualization.prismacoder \
+  examples/sigil_render_spec.json prismacoder-live.svg --fail-closed
+```
+
+Capture the test result, SVG, adjacent JSON manifest and deployed
+server/model logs as acceptance evidence. The requested model name and
+\`source=prismacoder\` **do not authenticate the deployed model weights**;
+operators must independently confirm that the endpoint actually serves
+PrismaCoder. Structural SVG checks do not prove waveform sample fidelity.
+Do not mark the deployed-endpoint gate verified before it passes.
+
 ## Safety and acceptance
 
 1. Preserve all GlyphMatics/VIL/BrailleByte canonical semantics outside the visual renderer.
