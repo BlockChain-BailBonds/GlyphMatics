@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "canvas": {
+    "width": 480,
+    "height": 320
+  },
+  "glyphs": [
+    {
+      "id": "G005",
+      "label": "cause → effect"
+    },
+    {
+      "id": "G332",
+      "label": "⠁ BrailleByte"
+    }
+  ],
+  "sigils": [
+    {
+      "id": "S001",
+      "equation": "sin(2πt)",
+      "samples": [
+        0,
+        1,
+        0,
+        -1,
+        0
+      ]
+    }
+  ]
+}

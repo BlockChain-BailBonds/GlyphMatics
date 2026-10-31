@@ -15,6 +15,7 @@ inventory trained into the latest reference checkpoint.
 
 - Semantic codec: exact tokenization, visible glyph encoding, binary encoding,
   and round-trip verification in [semantic_codec.py](src/glyphmatics/semantic_codec.py)
+- **PrismaCoder glyph + compute-sigil renderer**: opt-in multimodal SVG generation, canonical visual-ID checks, safe deterministic fallback and provenance manifests in [prismacoder.py](src/glyphmatics/visualization/prismacoder.py); see [renderer guide](docs/PRISMACODER_RENDERER.md).
 - Programming glyphs: canonical syntax glyphs for Python, JavaScript,
   TypeScript, Rust, Go, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin, Bash, and
   SQL in [programming_syntax.py](src/glyphmatics/programming_syntax.py)

@@ -1,5 +1,5 @@
 __version__ = "0.1.0"
-__all__ = ["GlyphMaticsEngine", "visualize_network"]
+__all__ = ["GlyphMaticsEngine", "visualize_network", "PrismaCoderRenderer"]
 
 
 def __getattr__(name):
@@ -13,4 +13,8 @@ def __getattr__(name):
         from .visualization.network import visualize_network
 
         return visualize_network
+    if name == "PrismaCoderRenderer":
+        from .visualization.prismacoder import PrismaCoderRenderer
+
+        return PrismaCoderRenderer
     raise AttributeError(name)
