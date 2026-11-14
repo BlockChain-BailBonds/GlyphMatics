@@ -33,7 +33,7 @@
     },
     {
       "path": "bin/offline-codex",
-      "sha256": "3d5afedceb3d203e156d32f0bb311b4f30200e1cb9a0a0eff0a1227037130e89"
+      "sha256": "516f426a07bb5f7b185b1404a26af85dce9a3971ba075607eb5ae79ebfbbe570"
     },
     {
       "path": "third_party/llama.cpp/build-gm918/bin/llama-cli",

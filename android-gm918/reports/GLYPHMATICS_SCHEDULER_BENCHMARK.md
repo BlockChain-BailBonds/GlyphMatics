@@ -4,8 +4,10 @@ Date: 2026-11-14. Device: Samsung SM-A146U. Model: byte-identical
 Qwen3-1.7B Q4_K_M GlyphMatics direct-mapped PNG. Context: 1024. Generation
 threads: 2. Batch threads: 2. Seed: 918. Temperature: 0. Reasoning: off.
 
-The candidate adds strict placement on Cortex-A76 CPUs 6–7 and medium llama.cpp
-worker priority. Both configurations were already constrained with `taskset`.
+The candidate adds strict placement on Cortex-A76 CPUs 6–7. Both configurations
+were already constrained with `taskset`. Android rejected the attempted medium
+worker priority with `Operation not permitted`, so priority did not contribute
+to the result and has been removed from the production launchers.
 
 | Pair | Baseline prompt/gen tok/s | Strict prompt/gen tok/s |
 |---|---:|---:|

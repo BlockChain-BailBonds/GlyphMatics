@@ -6,5 +6,4 @@ exec taskset -c 6,7 "$ROOT/third_party/llama.cpp/build-gm918/bin/llama-cli" \
   -m "$ROOT/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png" \
   -c 1024 -t 2 -tb 2 \
   -Cr 6-7 -Crb 6-7 --cpu-strict 1 --cpu-strict-batch 1 \
-  --prio 1 --prio-batch 1 \
   --reasoning off --simple-io "$@"

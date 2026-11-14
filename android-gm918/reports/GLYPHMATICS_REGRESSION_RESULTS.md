@@ -15,7 +15,7 @@
 | Fast PNG real inference | VERIFIED | correct arithmetic, direct PNG pathname |
 | Fast PNG CRC/alignment/payload SHA | VERIFIED | strict streaming verifier; no extraction |
 | 4 KiB weight-sprite index | VERIFIED | 313,096 sprites; exact full-model SHA; real inference |
-| Strict A76 scheduling | VERIFIED | mean +5.9% prompt, +9.6% generation over three pairs |
+| Strict A76 scheduling | VERIFIED | mean +5.9% prompt, +9.6% generation over three pairs; priority denied |
 | N-gram speculation candidate | FAILED | 9.3 to 4.9 gen tok/s; output changed; rejected |
 | Fast PNG vs GGUF warm speed | VERIFIED | near parity; 26.9/7.2 vs 27.1/7.5 tok/s |
 | Q3 size reduction | VERIFIED | 16.31% smaller than Q4 |

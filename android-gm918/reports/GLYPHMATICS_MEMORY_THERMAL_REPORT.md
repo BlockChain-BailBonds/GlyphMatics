@@ -19,7 +19,8 @@
 - Two-thread tuning reached 24.6 prompt tok/s and 9.4 generation tok/s in the short controlled test.
 - Production launcher pins two threads to Cortex-A76 cores 6–7.
 - Three paired scheduler tests averaged 22.2/8.3 prompt/generation tok/s for
-  affinity alone and 23.5/9.1 with strict placement plus medium priority.
+  affinity alone and 23.5/9.1 with strict placement. Attempted medium priority
+  was permission-denied by Android and was removed.
   Individual results varied; see `GLYPHMATICS_SCHEDULER_BENCHMARK.md`.
 
 Thermal temperature and battery impact are **BLOCKED** because Android denied the Termux UID access to thermal and battery services. Frequency changes and performance variance indicate scheduling/thermal sensitivity, but no temperature is inferred.
