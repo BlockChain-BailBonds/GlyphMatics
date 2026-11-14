@@ -1,0 +1,53 @@
+warn: failed to set thread priority 1 : Operation not permitted (1)
+warn: failed to set thread priority 1 : Operation not permitted (1)
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-5676dfb
+model      : /data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B.fast.png
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> Write a Python function that returns the factorial of a nonnegative integer. Include type hints, validation, a docstring, and three example calls.
+Here's a Python function that returns the factorial of a nonnegative integer, with type hints, validation, a docstring, and three example calls:
+
+```python
+from typing import Union
+
+def factorial(n: Union[int, float]) -> int:
+    """
+    Calculate the factorial of a nonnegative integer.
+
+    Args:
+        n (Union[int, float]): A nonnegative number. If it's a float, it must be an integer (e.g., 3.0).
+        
+    Returns:
+        int: The factorial of n.
+
+    Raises:
+        ValueError: If n is not a nonnegative integer.
+        TypeError:
+
+[ Prompt: 27.5 t/s | Generation: 9.3 t/s ]
+
+> 
+
+Exiting...

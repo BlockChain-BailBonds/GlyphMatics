@@ -1,0 +1,57 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-5676dfb
+model      : vault-fast/918_Qwen3_1.7B.fast.png
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> What is 17 multiplied by 23?
+To find $ 17 \times 23 $, we can use the distributive property:
+
+$$
+17 \times 23 = 17 \times (20 + 3) = (17 \times 20) + (17 \times 3)
+$$
+
+Now calculate each part:
+
+$$
+17 \times 20 = 340
+$$
+$$
+17 \times 3 = 51
+$$
+
+Add them together:
+
+$$
+340 + 51 = 391
+$$
+
+### Final Answer:
+$$
+\boxed{391}
+$$
+
+[ Prompt: 26.9 t/s | Generation: 7.2 t/s ]
+
+
+Exiting...

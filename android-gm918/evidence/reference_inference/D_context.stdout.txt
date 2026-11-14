@@ -1,0 +1,35 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b0-unknown
+model      : /data/data/com.termux/files/home/glyphmatics/archives/918_Qwen3_1.7B.gm918/model.gguf
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> Remember this unique identifier exactly: GM918-A14-7F3C. After briefly explaining what deterministic inference means, state the identifier I asked you to remember.
+Deterministic inference is a type of reasoning where the conclusion is necessarily true given the premises, without any uncertainty or probabilistic elements. It is often used in logic and artificial intelligence to make conclusions that are guaranteed based on the given information.
+
+The identifier you asked me to remember is: **GM918-A14-7F3C**.
+
+[ Prompt: 8.1 t/s | Generation: 3.6 t/s ]
+
+
+Exiting...

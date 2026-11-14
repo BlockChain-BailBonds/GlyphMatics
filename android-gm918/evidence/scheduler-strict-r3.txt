@@ -1,0 +1,39 @@
+warn: failed to set thread priority 1 : Operation not permitted (1)
+warn: failed to set thread priority 1 : Operation not permitted (1)
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-5676dfb
+model      : /data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B.fast.png
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> What is 17 multiplied by 23?
+To find $ 17 \times 23 $, we can use the distributive property:
+
+$$
+17 \times 23 = 
+
+[ Prompt: 20.5 t/s | Generation: 8.3 t/s ]
+
+> 
+
+Exiting...

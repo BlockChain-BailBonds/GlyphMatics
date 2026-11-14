@@ -1,0 +1,63 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-5676dfb
+model      : /data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png
+ftype      : Q3_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> What is 17 multiplied by 23?
+To find the product of 17 and 23, we can use the standard multiplication method:
+
+$$
+17 \times 23
+$$
+
+We can break this down as:
+
+$$
+17 \times 23 = 17 \times (20 + 3) = (17 \times 20) + (17 \times 3)
+$$
+
+Now calculate each part:
+
+$$
+17 \times 20 = 340
+$$
+$$
+17 \times 3 = 51
+$$
+
+Now add the two results:
+
+$$
+340 + 51 = 391
+$$
+
+### Final Answer:
+$$
+\boxed{391}
+$$
+
+[ Prompt: 12.1 t/s | Generation: 7.0 t/s ]
+
+
+Exiting...

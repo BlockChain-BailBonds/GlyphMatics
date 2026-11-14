@@ -1,0 +1,53 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b0-unknown
+model      : /data/data/com.termux/files/home/glyphmatics/archives/918_Qwen3_1.7B.gm918/model.gguf
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> Write a self-contained technical explanation of how transformer inference works on a resource-constrained ARM64 phone. Discuss tokenization, quantized weights, attention, KV cache, sampling, memory limits, and thermal constraints.
+**Technical Explanation of Transformer Inference on ARM64 Phones**
+
+Transformer inference is a powerful approach to natural language processing (NLP) that relies on the **self-attention mechanism** to model relationships between words in a sentence. When deployed on resource-constrained devices like ARM64 phones, the challenge is to optimize the model for efficiency, while maintaining performance and accuracy.
+
+---
+
+### 1. **Tokenization**
+
+Tokenization is the process of converting text into a sequence of tokens (e.g., words, subwords, or character-level units) that can be processed by the model. In the context of transformer inference:
+
+- **Input Tokenization**: The text is tokenized into a sequence of tokens, typically using a tokenizer like BPE (Byte Pair Encoding) or WordPiece.
+- **Padding and Truncation**: To handle variable-length inputs, the sequence is padded to a fixed length and truncated if necessary.
+- **Efficiency on ARM64**: ARM64 processors support efficient tokenization with lightweight libraries like **onnxruntime** or **TensorRT**, which optimize for speed and memory usage.
+
+---
+
+### 2. **Quantized Weights**
+
+To reduce memory usage and computational load on ARM64 devices:
+
+- **Quantization**: The model
+
+[ Prompt: 6.3 t/s | Generation: 3.0 t/s ]
+
+
+Exiting...

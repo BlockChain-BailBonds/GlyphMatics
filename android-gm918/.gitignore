@@ -1,0 +1,23 @@
+# Large/reproducible model artifacts
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+vault/
+vault-fast/
+archives/
+candidates/
+models/
+
+# Local builds and dependency checkouts
+third_party/llama.cpp/
+build*/
+__pycache__/
+*.pyc
+
+# Temporary and generated files
+*.partial
+*.partial.png
+evidence/regression/synthetic.bin

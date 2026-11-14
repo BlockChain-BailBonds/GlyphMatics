@@ -1,0 +1,41 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b0-unknown
+model      : /data/data/com.termux/files/home/glyphmatics/archives/918_Qwen3_1.7B.gm918/model.gguf
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> Explain why a metal spoon feels colder than a wooden spoon at the same room temperature.
+A metal spoon feels colder than a wooden spoon at the same room temperature because of the difference in **thermal conductivity** between the two materials.
+
+### Explanation:
+
+- **Thermal Conductivity**: This is a measure of how well a material conducts heat. Materials with higher thermal conductivity allow heat to pass through them more easily.
+
+- **Metal (e.g., aluminum, copper, iron)**: These materials are **highly conductive**. When you hold a metal spoon, it conducts heat from your hand more efficiently than a wooden spoon, which is **low in thermal conductivity**.
+
+- **Wooden Spoon (e.g., oak, maple, pine)**: These materials are **low in thermal conductivity**, so they do not conduct heat as well. As a result, when you hold a wooden
+
+[ Prompt: 8.8 t/s | Generation: 3.5 t/s ]
+
+
+Exiting...

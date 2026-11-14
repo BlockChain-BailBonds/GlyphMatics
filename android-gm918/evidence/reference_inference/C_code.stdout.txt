@@ -1,0 +1,58 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b0-unknown
+model      : /data/data/com.termux/files/home/glyphmatics/archives/918_Qwen3_1.7B.gm918/model.gguf
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> Write a Python function that returns the factorial of a nonnegative integer.
+Here's a Python function that returns the factorial of a nonnegative integer:
+
+```python
+def factorial(n):
+    if n < 0:
+        raise ValueError("Factorial is not defined for negative integers.")
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+```
+
+### Explanation:
+- The function uses **recursion** to compute the factorial.
+- It handles the base case when `n == 0` (returning 1).
+- It recursively multiplies `n` by the factorial of `n - 1`.
+- It also includes a check for negative inputs, raising a `ValueError` if needed.
+
+### Example usage:
+```python
+print(factorial(5))  # Output: 120
+print(factorial(0))  # Output: 1
+print(factorial(3))  # Output: 6
+```
+
+Let
+
+[ Prompt: 6.6 t/s | Generation: 3.9 t/s ]
+
+
+Exiting...

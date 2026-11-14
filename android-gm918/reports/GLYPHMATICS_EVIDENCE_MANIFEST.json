@@ -1,0 +1,61 @@
+{
+  "project": "GlyphMatics — 918 Technologies",
+  "generated_at": "2026-11-13T00:00:00-06:00",
+  "device": "Samsung SM-A146U / a14xm / MediaTek MT6833",
+  "llama_cpp_revision": "5676dfbe01e7ebe0387913680eee0ed39bf4a363",
+  "artifacts": [
+    {
+      "path": "vault-fast/918_Qwen3_1.7B.fast.png",
+      "bytes": 1282443376,
+      "file_sha256": "754e42e56396876139de62eac5bb1e9259f192c5ec673cd03bfd60a254381b94",
+      "payload_bytes": 1282439264,
+      "payload_sha256": "d2387ca2dbfee2ffabce7120d3770dadca0b293052bc2f0e138fdc940d9bc7b5",
+      "weight_sprite_geometry": "64x64x8-bit",
+      "weight_sprite_bytes": 4096,
+      "weight_sprite_count": 313096,
+      "status": "VERIFIED"
+    },
+    {
+      "path": "vault-fast/918_Qwen3_1.7B_Q3KM.fast.png",
+      "bytes": 1073246640,
+      "file_sha256": "2bbe43a959d30d193e27579ae3299c05acb4ebd0bae007e82f9437734b140310",
+      "payload_bytes": 1073242528,
+      "payload_sha256": "d544d30dbb7b2f608775d69c939a9b8d89c45df2be1a5ad1390ddc1bd7f8d6f5",
+      "status": "UNVERIFIED_BROAD_QUALITY"
+    },
+    {
+      "path": "sigilvm4/encode_mmap_png.py",
+      "sha256": "61b268f7a7b02108daeed5c01243a25e46a9944014b49ce65d39f9c7d173c8a2"
+    },
+    {
+      "path": "sigilvm4/verify_mmap_png.py",
+      "sha256": "6b45040d8da1f395fbf0f8bc08305943f9b930729729bdaa6e468040aa714453"
+    },
+    {
+      "path": "bin/offline-codex",
+      "sha256": "3d5afedceb3d203e156d32f0bb311b4f30200e1cb9a0a0eff0a1227037130e89"
+    },
+    {
+      "path": "third_party/llama.cpp/build-gm918/bin/llama-cli",
+      "sha256": "342bd46baae9f8d9830d65cb70fa0c9bdf0eaf951a25fb084b80ca3f2bdef0fe"
+    }
+  ],
+  "evidence": {
+    "reference_suite": "evidence/reference_inference/results.json",
+    "corruption_suite": "evidence/regression/failure-cases/results.json",
+    "fast_png_inference": "evidence/fast-png-arithmetic-warm.stdout.txt",
+    "production_launcher": "evidence/production-strict-smoke.txt",
+    "scheduler_benchmark": "reports/GLYPHMATICS_SCHEDULER_BENCHMARK.md",
+    "rejected_ngram_speculation": "evidence/spec-ngram-code.txt",
+    "weight_sprite_inference": "evidence/sprite-production-smoke.txt"
+  },
+  "acceptance": {
+    "png_direct_inference": "VERIFIED",
+    "weight_sprite_index": "VERIFIED",
+    "no_persistent_reconstruction": "VERIFIED",
+    "managed_vault_png_only": "VERIFIED",
+    "faster_than_gguf": "UNVERIFIED",
+    "radios_disabled_restart": "UNVERIFIED",
+    "whole_project": "UNVERIFIED"
+  }
+}

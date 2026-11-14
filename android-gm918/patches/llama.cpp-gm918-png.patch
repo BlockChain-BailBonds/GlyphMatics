@@ -1,0 +1,38 @@
+diff --git a/ggml/src/gguf.cpp b/ggml/src/gguf.cpp
+index c80b682..38d552c 100644
+--- a/ggml/src/gguf.cpp
++++ b/ggml/src/gguf.cpp
+@@ -1022,6 +1022,33 @@ struct gguf_context * gguf_init_from_file(const char * fname, struct gguf_init_p
+         return nullptr;
+     }
+ 
++    // GM918 Sigil Image VM v4 fast layout: a valid PNG whose page-aligned gmDT
++    // ancillary chunk contains a contiguous GGUF payload. Keep offsets absolute
++    // so llama.cpp can mmap tensor pages directly from the PNG file.
++    unsigned char png_sig[8] = {};
++    if (fread(png_sig, 1, sizeof(png_sig), file) == sizeof(png_sig) &&
++            memcmp(png_sig, "\x89PNG\r\n\x1a\n", 8) == 0) {
++        bool found = false;
++        while (!found) {
++            unsigned char head[8];
++            if (fread(head, 1, sizeof(head), file) != sizeof(head)) break;
++            uint32_t len = (uint32_t(head[0]) << 24) | (uint32_t(head[1]) << 16) |
++                           (uint32_t(head[2]) << 8) | uint32_t(head[3]);
++            if (memcmp(head + 4, "gmDT", 4) == 0) {
++                found = true;
++                break;
++            }
++            if (gguf_fseek(file, int64_t(len) + 4, SEEK_CUR) != 0) break;
++        }
++        if (!found) {
++            fclose(file);
++            GGML_LOG_ERROR("%s: PNG has no GM918 gmDT payload: '%s'\n", __func__, fname);
++            return nullptr;
++        }
++    } else {
++        gguf_fseek(file, 0, SEEK_SET);
++    }
++
+     struct gguf_context * result = gguf_init_from_file_ptr(file, params);
+     fclose(file);
+     return result;

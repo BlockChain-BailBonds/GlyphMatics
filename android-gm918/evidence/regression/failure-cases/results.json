@@ -1,0 +1,53 @@
+{
+  "suite": "GM918 PNG failure validation",
+  "tests": [
+    {
+      "name": "missing-tile",
+      "status": "VERIFIED",
+      "expected": "manifest tile count mismatch",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "GM918_ERROR manifest tile count mismatch\n"
+    },
+    {
+      "name": "truncated-tile",
+      "status": "VERIFIED",
+      "expected": "truncated PNG chunk",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "GM918_ERROR truncated PNG chunk: /data/data/com.termux/files/home/glyphmatics/evidence/regression/failure-cases/truncated-tile/tile-000000.png\n"
+    },
+    {
+      "name": "modified-pixel",
+      "status": "VERIFIED",
+      "expected": "PNG CRC mismatch",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "GM918_ERROR PNG CRC mismatch: /data/data/com.termux/files/home/glyphmatics/evidence/regression/failure-cases/modified-pixel/tile-000000.png\n"
+    },
+    {
+      "name": "invalid-offset",
+      "status": "VERIFIED",
+      "expected": "tile index/offset mismatch",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "GM918_ERROR tile index/offset mismatch: /data/data/com.termux/files/home/glyphmatics/evidence/regression/failure-cases/invalid-offset/tile-000001.png\n"
+    },
+    {
+      "name": "unsupported-version",
+      "status": "VERIFIED",
+      "expected": "incomplete/unsupported GM918 PNG",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "GM918_ERROR incomplete/unsupported GM918 PNG: /data/data/com.termux/files/home/glyphmatics/evidence/regression/failure-cases/unsupported-version/tile-000000.png\n"
+    },
+    {
+      "name": "incorrect-manifest",
+      "status": "VERIFIED",
+      "expected": "PNG inflate failed",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "GM918_ERROR PNG inflate failed: /data/data/com.termux/files/home/glyphmatics/evidence/regression/failure-cases/incorrect-manifest/manifest.png\n"
+    }
+  ]
+}
