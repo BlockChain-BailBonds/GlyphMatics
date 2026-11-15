@@ -1,0 +1,4 @@
+VERIFIED metadata-crc: PNG metadata CRC mismatch
+VERIFIED missing-sprite-index: gmDT precedes required
+VERIFIED bad-sprite-geometry: unsupported gmSI sprite geometry
+VERIFIED payload-size-mismatch: gmDT length disagrees with gmHD

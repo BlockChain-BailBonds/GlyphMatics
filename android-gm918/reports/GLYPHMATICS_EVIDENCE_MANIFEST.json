@@ -18,9 +18,11 @@
     {
       "path": "vault-fast/918_Qwen3_1.7B_Q3KM.fast.png",
       "bytes": 1073246640,
-      "file_sha256": "2bbe43a959d30d193e27579ae3299c05acb4ebd0bae007e82f9437734b140310",
+      "file_sha256": "39e0bed83d83268aa9958730a45165f859e529e350fe0553d6078406d0044fac",
       "payload_bytes": 1073242528,
       "payload_sha256": "d544d30dbb7b2f608775d69c939a9b8d89c45df2be1a5ad1390ddc1bd7f8d6f5",
+      "weight_sprite_geometry": "64x64x8-bit",
+      "weight_sprite_count": 262023,
       "status": "UNVERIFIED_BROAD_QUALITY"
     },
     {
@@ -33,7 +35,7 @@
     },
     {
       "path": "bin/offline-codex",
-      "sha256": "516f426a07bb5f7b185b1404a26af85dce9a3971ba075607eb5ae79ebfbbe570"
+      "sha256": "8cfa85026d1f97b4fef5b9c5b7fddfb469fdcfe911934ee13a03592e53e31b9e"
     },
     {
       "path": "third_party/llama.cpp/build-gm918/bin/llama-cli",
@@ -47,11 +49,15 @@
     "production_launcher": "evidence/production-strict-smoke.txt",
     "scheduler_benchmark": "reports/GLYPHMATICS_SCHEDULER_BENCHMARK.md",
     "rejected_ngram_speculation": "evidence/spec-ngram-code.txt",
-    "weight_sprite_inference": "evidence/sprite-production-smoke.txt"
+    "weight_sprite_inference": "evidence/sprite-production-smoke.txt",
+    "hardened_loader_regression": "evidence/hardened-loader-regression.txt",
+    "hardened_q4_inference": "evidence/hardened-loader-q4.txt",
+    "hardened_q3_inference": "evidence/hardened-loader-q3.txt"
   },
   "acceptance": {
     "png_direct_inference": "VERIFIED",
     "weight_sprite_index": "VERIFIED",
+    "strict_native_metadata_validation": "VERIFIED",
     "no_persistent_reconstruction": "VERIFIED",
     "managed_vault_png_only": "VERIFIED",
     "faster_than_gguf": "UNVERIFIED",

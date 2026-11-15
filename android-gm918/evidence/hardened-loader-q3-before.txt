@@ -1,0 +1,14 @@
+0.00.209.456 E gguf_init_from_file: invalid GM918 PNG '/data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png': gmDT precedes required IHDR/gmHD/gmSI
+0.00.211.204 E llama_model_load: error loading model: llama_model_loader: failed to load model from /data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png
+0.00.211.222 E llama_model_load_from_file_impl: failed to load model
+0.00.211.542 E common_fit_params: encountered an error while trying to fit params to free device memory: failed to load model
+0.00.211.747 E gguf_init_from_file: invalid GM918 PNG '/data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png': gmDT precedes required IHDR/gmHD/gmSI
+0.00.211.834 E llama_model_load: error loading model: llama_model_loader: failed to load model from /data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png
+0.00.211.841 E llama_model_load_from_file_impl: failed to load model
+0.00.211.847 E cmn  common_init_: failed to load model '/data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png'
+0.00.211.858 E srv    load_model: failed to load model, '/data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png'
+0.00.213.080 E srv  server_run_i: exiting due to model loading error
+llama_server exited with code 1
+
+
+Loading model... Error: the server exited before becoming ready

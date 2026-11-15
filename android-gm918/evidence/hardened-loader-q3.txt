@@ -1,0 +1,34 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-5676dfb
+model      : /data/data/com.termux/files/home/glyphmatics/vault-fast/918_Qwen3_1.7B_Q3KM.fast.png
+ftype      : Q3_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> What is 17 multiplied by 23?
+To find the product of 17 and 23, we can use
+
+[ Prompt: 4.9 t/s | Generation: 5.3 t/s ]
+
+> 
+
+Exiting...

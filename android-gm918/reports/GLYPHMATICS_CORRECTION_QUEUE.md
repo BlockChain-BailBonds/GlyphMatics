@@ -2,7 +2,8 @@
 
 Smallest/highest-value first:
 
-1. Cache the completed authenticated fast-PNG verification by size/mtime so it need not run on every launch.
+1. Add a signed manifest and per-sprite Merkle tree so random pages can be
+   cryptographically authenticated without hashing 1.28 GB on every startup.
 2. Add an incorrect-tokenizer-metadata fixture with recomputed container hashes and confirm llama.cpp rejects it.
 3. Complete Q3 reasoning, code, context, and sustained quality tests before considering promotion.
 4. Add tensor-order tuning; current llama.cpp already uses whole-map `MAP_POPULATE`

@@ -10,6 +10,7 @@ vault-fast/
 archives/
 candidates/
 models/
+models-source/
 
 # Local builds and dependency checkouts
 third_party/llama.cpp/

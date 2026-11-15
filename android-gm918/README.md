@@ -12,6 +12,12 @@ Start an interactive local conversation:
 offline-codex
 ```
 
+Provision a fresh Termux installation (downloads occur only during setup):
+
+```sh
+./install-termux.sh
+```
+
 Run one prompt without the slower reasoning mode:
 
 ```sh
