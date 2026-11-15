@@ -21,7 +21,15 @@ if [ ! -d "$LLAMA_DIR/.git" ]; then
 fi
 git -C "$LLAMA_DIR" fetch --depth 1 origin "$LLAMA_REV"
 git -C "$LLAMA_DIR" checkout --detach "$LLAMA_REV"
-git -C "$LLAMA_DIR" apply "$ROOT/patches/llama.cpp-gm918-png.patch"
+PATCH="$ROOT/patches/llama.cpp-gm918-png.patch"
+if git -C "$LLAMA_DIR" apply --check "$PATCH"; then
+    git -C "$LLAMA_DIR" apply "$PATCH"
+elif git -C "$LLAMA_DIR" apply --reverse --check "$PATCH"; then
+    echo "GM918 loader patch is already applied"
+else
+    echo "GM918 loader patch does not match pinned source" >&2
+    exit 1
+fi
 
 cmake -S "$LLAMA_DIR" -B "$BUILD_DIR" \
     -DCMAKE_BUILD_TYPE=Release \
