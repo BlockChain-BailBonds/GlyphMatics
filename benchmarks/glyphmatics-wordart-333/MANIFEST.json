@@ -1,0 +1,123 @@
+{
+  "artifact": "glyphmatics-wordart-333",
+  "canon_count": 333,
+  "files": [
+    {
+      "path": "GLYPHMATICS_WORDART_KAGGLE.ipynb",
+      "sha256": "894e62bb58adaf5ee03068f87f2f0e66fe74f3a0f8deb893217c5db7486b747a",
+      "size_bytes": 43197
+    },
+    {
+      "path": "GLYPHMATICS_WORDART_TASK.py",
+      "sha256": "add2ad1319647223aa70b8f7a0b6d6305c10086999458cb9c3da3024f5ef0a15",
+      "size_bytes": 41241
+    },
+    {
+      "path": "NOTICE.md",
+      "sha256": "9f961531d997aef0ff0c37dcd48072c9ba7f2af4a31fdc8682fe7537a2940280",
+      "size_bytes": 436
+    },
+    {
+      "path": "README.md",
+      "sha256": "e6c41b72d1421b95081d30f2d1bc18fd350bb1daebd6eb8a59d6758bd1a4e053",
+      "size_bytes": 3124
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "d0b72f56b5e34b35ad03ca30f2c3c7ef1b39c4b38a24c2ed037df7ed6e4aa500",
+      "size_bytes": 870
+    },
+    {
+      "path": "kaggle_task.py",
+      "sha256": "3768f8375aa2d8fe6fdd41786236c591c69f4f5b1b798974f1c43509d8a97b87",
+      "size_bytes": 2164
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "b48b87ae201749b5f9bdaf879e1146a7f56dc5721c5baf3dedc8bc845f1a74e7",
+      "size_bytes": 748
+    },
+    {
+      "path": "scripts/build_release.py",
+      "sha256": "ad6fe95d9a8861625d7195ea236e1d9b48ef51a395e5f6313414bc5f49daa92a",
+      "size_bytes": 7547
+    },
+    {
+      "path": "scripts/validate_standalone.py",
+      "sha256": "dd73c377d4301a73a97041611c76dd5b94d86b10a87075709cee5f3cbc64f6ca",
+      "size_bytes": 2977
+    },
+    {
+      "path": "src/glyphmatics_wordart/__init__.py",
+      "sha256": "ff4381483bf00575a205e54db3978b18faf33140d93d267202161df2b4e4a2ca",
+      "size_bytes": 1195
+    },
+    {
+      "path": "src/glyphmatics_wordart/art_rules.py",
+      "sha256": "fc00f53ed11de5154ca5e1eb928e003dfb44a5db753af22f2b46857489e603fe",
+      "size_bytes": 7317
+    },
+    {
+      "path": "src/glyphmatics_wordart/benchmark.py",
+      "sha256": "edb16db3d3d5aac308e4712d808229ea959284a591e0284c3e683ba11f29ef9d",
+      "size_bytes": 14235
+    },
+    {
+      "path": "src/glyphmatics_wordart/canon333.py",
+      "sha256": "6d4d264a56ff952e451c1b9697bed85f545813220da3930d88ff9e8475363da6",
+      "size_bytes": 7755
+    },
+    {
+      "path": "src/glyphmatics_wordart/cli.py",
+      "sha256": "8e73a5c49072b85777d26ba5d52e256fac6f2472ccc4e250825ce23179669b58",
+      "size_bytes": 1963
+    },
+    {
+      "path": "src/glyphmatics_wordart/codec.py",
+      "sha256": "eb576af0361a6a557986fa65ca3e0b1584fadf969c830b481ff61097d9ad39b9",
+      "size_bytes": 3263
+    },
+    {
+      "path": "src/glyphmatics_wordart/data/cases.json",
+      "sha256": "982101eb2906bde42d7dec85f6645c8680e3614a66f6961990bf799b36bc02a7",
+      "size_bytes": 1562
+    },
+    {
+      "path": "src/glyphmatics_wordart/executor.py",
+      "sha256": "0f2e901ad61b20ffd8eec5229a69cebd9cfaa093fadfb86a1f9cb81816619a3f",
+      "size_bytes": 4729
+    },
+    {
+      "path": "src/glyphmatics_wordart/learning.py",
+      "sha256": "aa95f4035011ce51c8307be18e34c98685283d9e1a07aff92c231573887c3957",
+      "size_bytes": 13081
+    },
+    {
+      "path": "src/glyphmatics_wordart/models.py",
+      "sha256": "526d3a1d8ab4343c48a11217dea4a3853ef79582ac130651cdc14c70c22ac8c7",
+      "size_bytes": 11460
+    },
+    {
+      "path": "src/glyphmatics_wordart/scoring.py",
+      "sha256": "f0232325cac3cb8109439f82871631b079c05f5d2558c6c658b055a3ab40b886",
+      "size_bytes": 4408
+    },
+    {
+      "path": "src/glyphmatics_wordart/selftest.py",
+      "sha256": "ed64b7d59a216c309d468e0e8997a3d7f78e398880bed0dbb52994ed2d7dc9aa",
+      "size_bytes": 2297
+    },
+    {
+      "path": "tests/test_bridge.py",
+      "sha256": "fa9a03cbe1e617eb195a1e42a803ee5a028988b6918efa9c480ab3c6236a9789",
+      "size_bytes": 5823
+    },
+    {
+      "path": "tests/test_unittest.py",
+      "sha256": "e8e500a4a10364658309dae1b8bfa1c026c4b717e074ac849d3f1db626452bcf",
+      "size_bytes": 4742
+    }
+  ],
+  "schema": "glyphmatics.wordart.release.v1",
+  "version": "1.0.0"
+}
