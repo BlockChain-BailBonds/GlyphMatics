@@ -1,0 +1,57 @@
+name: KSIG-333 Public-25
+
+on:
+  pull_request:
+    paths:
+      - "experiments/ksig333_public25.py"
+      - "tests/test_ksig333_public25.py"
+      - ".github/workflows/ksig333-public25.yml"
+  workflow_dispatch:
+
+jobs:
+  build-test-score:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout GlyphMatics
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install proof dependencies
+        run: python -m pip install --upgrade pip pillow pytest
+
+      - name: Run unit tests
+        run: pytest -q tests/test_ksig333_public25.py
+
+      - name: Fetch pinned ARC-AGI-3 public game corpus
+        run: |
+          git clone https://github.com/Poolminer/ARC3.Games.git /tmp/ARC3.Games
+          cd /tmp/ARC3.Games
+          git checkout 40635759decb6abb2f77cb0787d9171e1ec4a2e7
+
+      - name: Build and score Public-25 Knowledge Sigil
+        run: |
+          python experiments/ksig333_public25.py \
+            --games-root /tmp/ARC3.Games/environment_files \
+            --out-dir artifacts/ksig333
+
+      - name: Verify image-only rehydration
+        run: python experiments/ksig333_public25.py --decode artifacts/ksig333/public25.ksig.png
+
+      - name: Show score summary
+        run: cat artifacts/ksig333/score.json
+
+      - name: Upload KSIG proof artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ksig333-public25
+          path: |
+            artifacts/ksig333/public25.ksig.png
+            artifacts/ksig333/public25.ksig.json
+            artifacts/ksig333/leave_one_out.json
+            artifacts/ksig333/score.json
+          if-no-files-found: error
