@@ -151,3 +151,9 @@ Focused checks run locally before this state:
 ## Technical notes
 
 Further details live in [docs/VIL_SEMANTIC_LM.md](docs/VIL_SEMANTIC_LM.md).
+
+## Validation record
+
+Historical milestones are separated by category. The project owner confirms that physical dual-device computation, device communication within the tested scope, distributed job execution, and GPU tests passed. The current recovered signed relay ping artifacts verify relay communication only; recovered Kaggle evidence verifies two Tesla T4 GPU allocation, workload execution, result checks, and utilization sampling. These do not establish ESP32 integration or full SkyNet end-to-end operation. Host-independent computation remains a separate research objective. See the private authoritative [SkyNet OS Core validation registry](https://github.com/BlockChain-BailBonds/SkyNet-OS-Core/tree/main/registries) for evidence scope and digests.
+
+© 2026 Matthew Blake Ward / 918 Technologies. All rights reserved.
